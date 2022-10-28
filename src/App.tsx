@@ -1,7 +1,11 @@
-import { Text } from '@chakra-ui/react';
+import { Route, Routes } from 'react-router-dom';
 
 function App() {
-    return <Text>Hello</Text>;
+    return (
+        <Routes>
+            <Route path='/' element={<Home />} />
+        </Routes>
+    );
 }
 
 export default App;
