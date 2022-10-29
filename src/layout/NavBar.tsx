@@ -5,27 +5,26 @@ import {
     Center,
     Flex,
     Icon,
-    IconButton,
-    Stack,
+    IconButton, Stack,
     Text,
     useColorMode,
     useColorModeValue
 } from '@chakra-ui/react';
-import { FaThList } from 'react-icons/fa';
+import { MdWifiTethering } from 'react-icons/md';
 
 export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
         <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} position='fixed' top={0} width='100%'>
-            <Flex h={16} alignItems='center' justifyContent='space-between'>
+            <Flex h={14} alignItems='center' justifyContent='space-between'>
                 <Flex alignItems='center' gap={2}>
                     <Center>
-                        <Icon w={6} h={6} as={FaThList} />
+                        <Icon w={6} h={6} as={MdWifiTethering} />
                     </Center>
                     <Center>
-                        <Text fontSize='2xl' fontWeight='bold'>
-                            Collablist
+                        <Text fontSize='xl' fontWeight='bold'>
+                            Agora
                         </Text>
                     </Center>
                 </Flex>
@@ -34,9 +33,12 @@ export default function NavBar() {
                         <IconButton
                             aria-label='change theme'
                             onClick={toggleColorMode}
+                            size='sm'
                             icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                         />
-                        <Button type='button'>Login</Button>
+                        <Button size='sm' type='button'>
+                            Login
+                        </Button>
                     </Stack>
                 </Flex>
             </Flex>
