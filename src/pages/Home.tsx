@@ -1,5 +1,6 @@
-import { Grid, GridItem, Text } from '@chakra-ui/react';
+import { Grid, GridItem } from '@chakra-ui/react';
 import PostList from '../features/post/PostList';
+import NewTopicsList from '../features/topic/NewTopicsList';
 import MainContainer from '../layout/MainContainer';
 
 export default function Home() {
@@ -9,8 +10,8 @@ export default function Home() {
                 <GridItem colSpan={8}>
                     <PostList />
                 </GridItem>
-                <GridItem colSpan={4} backgroundColor='blue'>
-                    <Text>HI</Text>
+                <GridItem colSpan={4}>
+                    <NewTopicsList />
                 </GridItem>
             </Grid>
         </MainContainer>

@@ -1,12 +1,14 @@
 import api from '../redux/rtk';
 import { ITopic, IUser, PaginationRequestParams, PaginationResponseData } from '../types';
 
-interface GetTopicsResponse extends PaginationResponseData<ITopic> {
+export interface GetTopicsResponseItem extends ITopic {
     user: Pick<IUser, 'id' | 'username'>;
     _count: {
         posts: number;
     };
 }
+
+type GetTopicsResponse = PaginationResponseData<GetTopicsResponseItem>;
 
 export const topicApi = api.injectEndpoints({
     endpoints: (builder) => ({

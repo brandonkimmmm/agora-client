@@ -17,7 +17,14 @@ export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
 
     return (
-        <Box bg={useColorModeValue('gray.100', 'gray.900')} px={4} position='fixed' top={0} width='100%'>
+        <Box
+            bg={useColorModeValue('gray.100', 'gray.900')}
+            px={4}
+            position='fixed'
+            top={0}
+            width='100%'
+            zIndex='docked'
+        >
             <Flex h={14} alignItems='center' justifyContent='space-between'>
                 <Flex alignItems='center' gap={2}>
                     <Center>
