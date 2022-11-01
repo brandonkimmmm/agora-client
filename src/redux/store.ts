@@ -1,8 +1,12 @@
 import { Action, AnyAction, combineReducers, configureStore, Reducer, ThunkAction } from '@reduxjs/toolkit';
+import authReducer from '../features/auth/authSlice';
+import modalReducer from '../features/modal/modalSlice';
 import api from './rtk';
 
 const appReducer = combineReducers({
-    [api.reducerPath]: api.reducer
+    [api.reducerPath]: api.reducer,
+    modal: modalReducer,
+    auth: authReducer
 });
 
 export type RootState = ReturnType<typeof appReducer>;

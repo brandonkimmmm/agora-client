@@ -5,15 +5,19 @@ import {
     Center,
     Flex,
     Icon,
-    IconButton, Stack,
+    IconButton,
+    Stack,
     Text,
     useColorMode,
     useColorModeValue
 } from '@chakra-ui/react';
 import { MdWifiTethering } from 'react-icons/md';
+import { ModalTypes, showModal } from '../features/modal/modalSlice';
+import { useAppDispatch } from '../hooks/redux';
 
 export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
+    const dispatch = useAppDispatch();
 
     return (
         <Box
@@ -58,6 +62,7 @@ export default function NavBar() {
                             variant='outline'
                             borderRadius='full'
                             colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
+                            onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_LOGIN }))}
                         >
                             Login
                         </Button>
