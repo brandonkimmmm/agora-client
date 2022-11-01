@@ -16,7 +16,7 @@ const baseQueryWithAuth: BaseQueryFn<string | FetchArgs, unknown, FetchBaseQuery
 
 const emptySplitApi = createApi({
     baseQuery: baseQueryWithAuth,
-    tagTypes: ['UNAUTHORIZED', 'UNKNOWN_ERROR', 'List', 'User', 'ListHistory'],
+    tagTypes: ['UNAUTHORIZED', 'UNKNOWN_ERROR', 'Topic', 'Post'],
     endpoints: () => ({})
 });
 
