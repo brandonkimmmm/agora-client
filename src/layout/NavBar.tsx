@@ -53,6 +53,7 @@ export default function NavBar() {
                             variant='solid'
                             borderRadius='full'
                             colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
+                            onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_SIGNUP }))}
                         >
                             Signup
                         </Button>

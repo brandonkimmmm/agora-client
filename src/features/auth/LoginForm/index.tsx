@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form';
 import { useLoginMutation } from '../../../api/auth';
 import { getErrorMessage } from '../../../api/helpers';
 import { useAppDispatch } from '../../../hooks/redux';
-import { hideModal } from '../../modal/modalSlice';
+import { hideModal, ModalTypes, showModal } from '../../modal/modalSlice';
 import { setCredentials } from '../authSlice';
 import { LoginSchema, loginSchema } from '../schema';
 
@@ -80,7 +80,7 @@ export default function LoginForm() {
             <FormControl isInvalid={!!errors.username}>
                 <FormLabel fontSize='sm'>Username</FormLabel>
                 <Input
-                    id='login-email'
+                    id='login-username'
                     isInvalid={!!errors.username}
                     placeholder='Username'
                     autoFocus
@@ -117,7 +117,13 @@ export default function LoginForm() {
             </Button>
             <Text fontSize='sm'>
                 Don&apos;t have an account?{' '}
-                <Button colorScheme='blue' fontWeight='normal' size='sm' variant='link'>
+                <Button
+                    onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_SIGNUP }))}
+                    colorScheme='blue'
+                    fontWeight='normal'
+                    size='sm'
+                    variant='link'
+                >
                     Signup
                 </Button>{' '}
                 here!

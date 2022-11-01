@@ -9,6 +9,7 @@ import {
 } from '@chakra-ui/react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import LoginForm from '../auth/LoginForm';
+import SignupForm from '../auth/SignupForm';
 // import Profile from '../auth/Profile';
 import { getModalState, hideModal } from './modalSlice';
 
@@ -18,7 +19,8 @@ export default function RootModal() {
 
     const getModalBody = () => {
         switch (type) {
-            // case 'AUTH_SIGNUP':
+            case 'AUTH_SIGNUP':
+                return <SignupForm />;
             case 'AUTH_LOGIN':
                 return <LoginForm />;
             default:
@@ -30,6 +32,8 @@ export default function RootModal() {
         switch (type) {
             case 'AUTH_LOGIN':
                 return 'Login';
+            case 'AUTH_SIGNUP':
+                return 'Signup';
             default:
                 return null;
         }

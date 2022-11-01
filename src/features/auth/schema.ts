@@ -8,13 +8,9 @@ export const loginSchema = z.object({
 
 export type LoginSchema = z.infer<typeof loginSchema>;
 
-export const signupSchema = z
-    .object({
-        email: z.string().email(),
-        password: z.string().regex(PASSWORD_REGEX.FULL, 'Invalid password'),
-        password_confirmation: z.string(),
-        first_name: z.string().min(2),
-        last_name: z.string().min(2)
+export const signupSchema = loginSchema
+    .extend({
+        password_confirmation: z.string()
     })
     .superRefine(({ password_confirmation, password }, ctx) => {
         if (password !== password_confirmation) {
