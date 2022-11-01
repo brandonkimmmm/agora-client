@@ -1,13 +1,6 @@
-import {
-    Modal,
-    ModalBody,
-    ModalCloseButton,
-    ModalContent,
-    ModalHeader,
-    ModalOverlay,
-    useColorModeValue
-} from '@chakra-ui/react';
+import { Modal, ModalBody, ModalCloseButton, ModalContent, ModalHeader, ModalOverlay } from '@chakra-ui/react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import useBackground from '../../hooks/useBackground';
 import LoginForm from '../auth/LoginForm';
 import SignupForm from '../auth/SignupForm';
 // import Profile from '../auth/Profile';
@@ -16,6 +9,7 @@ import { getModalState, hideModal } from './modalSlice';
 export default function RootModal() {
     const dispatch = useAppDispatch();
     const { is_visible, type, size } = useAppSelector(getModalState);
+    const background = useBackground();
 
     const getModalBody = () => {
         switch (type) {
@@ -42,7 +36,7 @@ export default function RootModal() {
     return (
         <Modal isOpen={is_visible && !!type} onClose={() => dispatch(hideModal())} size={size}>
             <ModalOverlay backdropFilter='blur(2px)' />
-            <ModalContent background={useColorModeValue('gray.50', 'black.900')}>
+            <ModalContent background={background}>
                 <ModalHeader>{getHeader()}</ModalHeader>
                 <ModalCloseButton />
                 <ModalBody pb={10}>{getModalBody()}</ModalBody>

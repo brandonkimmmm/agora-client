@@ -1,24 +1,13 @@
 import { ChevronUpIcon } from '@chakra-ui/icons';
-import {
-    Box,
-    Button,
-    Center,
-    HStack,
-    List,
-    ListIcon,
-    ListItem,
-    Spinner,
-    Text,
-    useColorMode,
-    useColorModeValue
-} from '@chakra-ui/react';
+import { Box, Button, Center, HStack, List, ListIcon, ListItem, Spinner, Text, useColorMode } from '@chakra-ui/react';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../../../api/topic';
+import useBackground from '../../../hooks/useBackground';
 import NewTopicListItem from './NewTopicListItem';
 
 export default function NewTopicsList() {
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetTopicsQuery();
-    const background = useColorModeValue('gray.50', 'black.900');
+    const background = useBackground();
     const { colorMode } = useColorMode();
 
     useEffectOnce(() => {

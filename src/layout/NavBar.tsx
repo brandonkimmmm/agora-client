@@ -15,7 +15,6 @@ import {
     Stack,
     Text,
     useColorMode,
-    useColorModeValue,
     useToast
 } from '@chakra-ui/react';
 import { MdWifiTethering } from 'react-icons/md';
@@ -23,13 +22,14 @@ import { resetAuth } from '../features/auth/authSlice';
 import { ModalTypes, showModal } from '../features/modal/modalSlice';
 import { useAppDispatch } from '../hooks/redux';
 import useAuth from '../hooks/useAuth';
+import useBackground from '../hooks/useBackground';
 
 export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
     const dispatch = useAppDispatch();
     const auth = useAuth();
     const toast = useToast();
-    const color = useColorModeValue('gray.50', 'black.900');
+    const background = useBackground();
 
     const handleLogout = () => {
         dispatch(resetAuth());
@@ -42,7 +42,7 @@ export default function NavBar() {
     };
 
     return (
-        <Box bg={color} px={4} position='fixed' top={0} width='100%' zIndex='docked'>
+        <Box bg={background} px={4} position='fixed' top={0} width='100%' zIndex='docked'>
             <Flex h={14} alignItems='center' justifyContent='space-between'>
                 <Flex alignItems='center' gap={2}>
                     <Center>

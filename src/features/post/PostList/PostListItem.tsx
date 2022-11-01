@@ -12,22 +12,15 @@ import {
 } from '@chakra-ui/react';
 import { BiComment, BiDownvote, BiUpvote } from 'react-icons/bi';
 import { GetPostsResponseItem } from '../../../api/post';
+import useBackground from '../../../hooks/useBackground';
 import { getTimePassed } from '../../../utils/dayjs';
 
 export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
     const { colorMode } = useColorMode();
+    const background = useBackground();
 
     return (
-        <Box
-            display='flex'
-            gap={2}
-            w='full'
-            py={3}
-            px={2}
-            boxShadow='md'
-            borderRadius='md'
-            bg={useColorModeValue('gray.50', 'black.900')}
-        >
+        <Box display='flex' gap={2} w='full' py={3} px={2} boxShadow='md' borderRadius='md' bg={background}>
             <VStack gap={0.5} w='5%'>
                 <IconButton size='lg' aria-label='upvote' variant='link' icon={<BiUpvote />} />
                 <Text fontSize='md' fontWeight='bold'>
