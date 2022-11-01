@@ -9,3 +9,5 @@ export const PASSWORD_REGEX = {
     DIGIT: /[\d]/,
     SPECIAL_CHARACTER: /[!@#$%^&*]/
 };
+
+export const TOPIC_TITLE_REGEX = /^[\da-zA-Z_]*$/;

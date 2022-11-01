@@ -10,9 +10,11 @@ export interface GetTopicsResponseItem extends ITopic {
 
 type GetTopicsResponse = PaginationResponseData<GetTopicsResponseItem>;
 
+type GetTopicsParams = PaginationRequestParams;
+
 export const topicApi = api.injectEndpoints({
     endpoints: (builder) => ({
-        getTopics: builder.query<GetTopicsResponse, PaginationRequestParams>({
+        getTopics: builder.query<GetTopicsResponse, GetTopicsParams>({
             query: (params) => ({
                 url: '/topics',
                 params

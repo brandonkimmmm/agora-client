@@ -9,6 +9,7 @@ import { setCredentials } from './features/auth/authSlice';
 import RootModal from './features/modal/RootModal';
 import { useAppDispatch } from './hooks/redux';
 import Home from './pages/Home';
+import Topic from './pages/Topic';
 
 function App() {
     const [isRendering, setIsRendering] = useState(true);
@@ -70,6 +71,7 @@ function App() {
             <RootModal />
             <Routes>
                 <Route path='/' element={<Home />} />
+                <Route path='/a/:topic' element={<Topic />} />
             </Routes>
         </>
     );
