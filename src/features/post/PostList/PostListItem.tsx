@@ -22,8 +22,9 @@ export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
             display='flex'
             gap={2}
             w='full'
-            p={2}
-            boxShadow='lg'
+            py={3}
+            px={2}
+            boxShadow='md'
             borderRadius='md'
             bg={useColorModeValue('gray.50', 'black.900')}
         >
@@ -61,7 +62,7 @@ export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
                         color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
                         variant='ghost'
                         p={1}
-                        size='sm'
+                        size='xs'
                         leftIcon={<BiComment />}
                     >
                         {post._count.comments} Comments

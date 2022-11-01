@@ -32,7 +32,18 @@ const colors = {
     black: {
         900: '#1B1B1B'
     },
-    brand: '#3CBBB1'
+    brand: {
+        50: '#ecf8f7',
+        100: '#c5ebe8',
+        200: '#9eddd8',
+        300: '#77cfc8',
+        400: '#50c2b9',
+        500: '#3cbbb1',
+        600: '#30968e',
+        700: '#24706a',
+        800: '#184b47',
+        900: '#0c2523'
+    }
 };
 
 const theme = extendTheme({

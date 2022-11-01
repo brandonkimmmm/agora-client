@@ -5,8 +5,7 @@ import {
     Center,
     Flex,
     Icon,
-    IconButton,
-    Stack,
+    IconButton, Stack,
     Text,
     useColorMode,
     useColorModeValue
@@ -28,7 +27,7 @@ export default function NavBar() {
             <Flex h={14} alignItems='center' justifyContent='space-between'>
                 <Flex alignItems='center' gap={2}>
                     <Center>
-                        <Icon w={6} h={6} as={MdWifiTethering} color='brand' />
+                        <Icon w={6} h={6} as={MdWifiTethering} color='brand.500' />
                     </Center>
                     <Center>
                         <Text fontSize='xl' fontWeight='bold'>
@@ -44,7 +43,22 @@ export default function NavBar() {
                             size='sm'
                             icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                         />
-                        <Button size='sm' type='button'>
+                        <Button
+                            size='sm'
+                            type='button'
+                            variant='solid'
+                            borderRadius='full'
+                            colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
+                        >
+                            Signup
+                        </Button>
+                        <Button
+                            size='sm'
+                            type='button'
+                            variant='outline'
+                            borderRadius='full'
+                            colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
+                        >
                             Login
                         </Button>
                     </Stack>

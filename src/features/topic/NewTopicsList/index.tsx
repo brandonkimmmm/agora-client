@@ -50,10 +50,10 @@ export default function NewTopicsList() {
     }
 
     return (
-        <Box boxShadow='lg' borderRadius='md' background={background}>
+        <Box boxShadow='md' borderRadius='md' background={background}>
             <Box
                 height='24'
-                backgroundImage="url('/agora-vector-bg.jpg')"
+                backgroundImage="linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(40, 40, 40, 0.73)), url('/agora-vector-bg.jpg')"
                 backgroundPosition='center'
                 backgroundSize='cover'
                 display='flex'
