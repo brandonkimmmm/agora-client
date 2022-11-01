@@ -1,11 +1,32 @@
-import { Avatar, Box, Button, HStack, IconButton, Image, Text, VStack } from '@chakra-ui/react';
+import {
+    Avatar,
+    Box,
+    Button,
+    HStack,
+    IconButton,
+    Image,
+    Text,
+    useColorMode,
+    useColorModeValue,
+    VStack
+} from '@chakra-ui/react';
 import { BiComment, BiDownvote, BiUpvote } from 'react-icons/bi';
 import { GetPostsResponseItem } from '../../../api/post';
 import { getTimePassed } from '../../../utils/dayjs';
 
 export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
+    const { colorMode } = useColorMode();
+
     return (
-        <Box display='flex' gap={2} w='full' background='black' py={2} px={1} boxShadow='lg' borderRadius='md'>
+        <Box
+            display='flex'
+            gap={2}
+            w='full'
+            p={2}
+            boxShadow='lg'
+            borderRadius='md'
+            bg={useColorModeValue('gray.50', 'black.900')}
+        >
             <VStack gap={0.5} w='5%'>
                 <IconButton size='lg' aria-label='upvote' variant='link' icon={<BiUpvote />} />
                 <Text fontSize='md' fontWeight='bold'>
@@ -22,11 +43,11 @@ export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
                         </Text>
                     </HStack>
                     <Text fontSize='xs'>&#8729;</Text>
-                    <Text color='gray' fontSize='xs'>
+                    <Text color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')} fontSize='xs'>
                         Posted by u/{post.user.username} {getTimePassed(post.created_at)}
                     </Text>
                     <Box flexGrow={1} />
-                    <Button size='xs' borderRadius='full'>
+                    <Button colorScheme={colorMode === 'light' ? 'blue' : 'gray'} size='xs' borderRadius='full'>
                         Join
                     </Button>
                 </HStack>
@@ -35,7 +56,14 @@ export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
                     <Image src={post.media_url} alt={post.title} loading='lazy' w='full' objectFit='contain' />
                 )}
                 <HStack>
-                    <Button variant='ghost' p={1} size='sm' leftIcon={<BiComment />}>
+                    <Button
+                        colorScheme='gray'
+                        color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
+                        variant='ghost'
+                        p={1}
+                        size='sm'
+                        leftIcon={<BiComment />}
+                    >
                         {post._count.comments} Comments
                     </Button>
                 </HStack>

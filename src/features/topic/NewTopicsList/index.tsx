@@ -1,11 +1,25 @@
 import { ChevronUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Center, HStack, List, ListIcon, ListItem, Spinner, Text } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Center,
+    HStack,
+    List,
+    ListIcon,
+    ListItem,
+    Spinner,
+    Text,
+    useColorMode,
+    useColorModeValue
+} from '@chakra-ui/react';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../../../api/topic';
 import NewTopicListItem from './NewTopicListItem';
 
 export default function NewTopicsList() {
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetTopicsQuery();
+    const background = useColorModeValue('gray.50', 'black.900');
+    const { colorMode } = useColorMode();
 
     useEffectOnce(() => {
         trigger({ limit: 5, page: 1 });
@@ -36,7 +50,7 @@ export default function NewTopicsList() {
     }
 
     return (
-        <Box boxShadow='lg' borderRadius='md' background='black'>
+        <Box boxShadow='lg' borderRadius='md' background={background}>
             <Box
                 height='24'
                 backgroundImage="url('/agora-vector-bg.jpg')"
@@ -48,7 +62,7 @@ export default function NewTopicsList() {
                 px={3}
                 borderTopRadius='md'
             >
-                <Text fontWeight='semibold' fontSize='md'>
+                <Text color='gray.50' fontWeight='semibold' fontSize='md'>
                     Today&apos;s Top Growing Communities
                 </Text>
             </Box>
@@ -63,7 +77,7 @@ export default function NewTopicsList() {
                             </HStack>
                         </ListItem>
                     ))}
-                    <Button size='sm' w='full'>
+                    <Button colorScheme={colorMode === 'light' ? 'blue' : 'gray'} size='sm' w='full'>
                         View All
                     </Button>
                 </List>

@@ -18,7 +18,7 @@ export default function NavBar() {
 
     return (
         <Box
-            bg={useColorModeValue('gray.100', 'gray.900')}
+            bg={useColorModeValue('gray.50', 'black.900')}
             px={4}
             position='fixed'
             top={0}
@@ -28,7 +28,7 @@ export default function NavBar() {
             <Flex h={14} alignItems='center' justifyContent='space-between'>
                 <Flex alignItems='center' gap={2}>
                     <Center>
-                        <Icon w={6} h={6} as={MdWifiTethering} />
+                        <Icon w={6} h={6} as={MdWifiTethering} color='brand' />
                     </Center>
                     <Center>
                         <Text fontSize='xl' fontWeight='bold'>

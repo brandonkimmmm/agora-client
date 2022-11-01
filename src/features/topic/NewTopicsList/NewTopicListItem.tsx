@@ -1,7 +1,9 @@
-import { Avatar, Box, Button, HStack, Text } from '@chakra-ui/react';
+import { Avatar, Box, Button, HStack, Text, useColorMode } from '@chakra-ui/react';
 import { GetTopicsResponseItem } from '../../../api/topic';
 
 export default function NewTopicListItem({ topic }: { topic: GetTopicsResponseItem }) {
+    const { colorMode } = useColorMode();
+
     return (
         <HStack w='full'>
             <Avatar size='sm' name={topic.display_title} />
@@ -9,7 +11,7 @@ export default function NewTopicListItem({ topic }: { topic: GetTopicsResponseIt
                 a/{topic.display_title}
             </Text>
             <Box flexGrow={1} />
-            <Button size='xs' borderRadius='full'>
+            <Button colorScheme={colorMode === 'light' ? 'blue' : 'gray'} size='xs' borderRadius='full'>
                 Join
             </Button>
         </HStack>
