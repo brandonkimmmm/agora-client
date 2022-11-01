@@ -67,7 +67,7 @@ export default function NavBar() {
                                 <MenuButton as={Button} rounded='full' variant='link' cursor='pointer' minW={0}>
                                     <Avatar colorScheme='brand' size='sm' />
                                 </MenuButton>
-                                <MenuList alignItems='center' background={color}>
+                                <MenuList alignItems='center' background={background}>
                                     <br />
                                     <Center>
                                         <Avatar colorScheme='brand' size='xl' />
