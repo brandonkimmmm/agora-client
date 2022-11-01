@@ -6,6 +6,7 @@ import { useEffectOnce } from 'usehooks-ts';
 import { useLazyCheckTokenQuery } from './api/auth';
 import { useLazyGetHealthQuery } from './api/public';
 import { setCredentials } from './features/auth/authSlice';
+import RootModal from './features/modal/RootModal';
 import { useAppDispatch } from './hooks/redux';
 import Home from './pages/Home';
 
@@ -65,9 +66,12 @@ function App() {
     }
 
     return (
-        <Routes>
-            <Route path='/' element={<Home />} />
-        </Routes>
+        <>
+            <RootModal />
+            <Routes>
+                <Route path='/' element={<Home />} />
+            </Routes>
+        </>
     );
 }
 

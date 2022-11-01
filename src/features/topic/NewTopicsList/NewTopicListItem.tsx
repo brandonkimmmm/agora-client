@@ -6,7 +6,7 @@ export default function NewTopicListItem({ topic }: { topic: GetTopicsResponseIt
 
     return (
         <HStack w='full'>
-            <Avatar size='sm' name={topic.display_title} />
+            <Avatar size='sm' name={topic.display_title} src={topic.image_url} />
             <Text fontSize='sm' fontWeight='bold'>
                 a/{topic.display_title}
             </Text>

@@ -1,33 +1,48 @@
 import { MoonIcon, SunIcon } from '@chakra-ui/icons';
 import {
+    Avatar,
     Box,
     Button,
     Center,
     Flex,
     Icon,
     IconButton,
+    Menu,
+    MenuButton,
+    MenuDivider,
+    MenuItem,
+    MenuList,
     Stack,
     Text,
     useColorMode,
-    useColorModeValue
+    useColorModeValue,
+    useToast
 } from '@chakra-ui/react';
 import { MdWifiTethering } from 'react-icons/md';
+import { resetAuth } from '../features/auth/authSlice';
 import { ModalTypes, showModal } from '../features/modal/modalSlice';
 import { useAppDispatch } from '../hooks/redux';
+import useAuth from '../hooks/useAuth';
 
 export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
     const dispatch = useAppDispatch();
+    const auth = useAuth();
+    const toast = useToast();
+    const color = useColorModeValue('gray.50', 'black.900');
+
+    const handleLogout = () => {
+        dispatch(resetAuth());
+        toast({
+            title: 'Logout successful',
+            status: 'success',
+            duration: 9000,
+            isClosable: true
+        });
+    };
 
     return (
-        <Box
-            bg={useColorModeValue('gray.50', 'black.900')}
-            px={4}
-            position='fixed'
-            top={0}
-            width='100%'
-            zIndex='docked'
-        >
+        <Box bg={color} px={4} position='fixed' top={0} width='100%' zIndex='docked'>
             <Flex h={14} alignItems='center' justifyContent='space-between'>
                 <Flex alignItems='center' gap={2}>
                     <Center>
@@ -47,26 +62,50 @@ export default function NavBar() {
                             size='sm'
                             icon={colorMode === 'light' ? <MoonIcon /> : <SunIcon />}
                         />
-                        <Button
-                            size='sm'
-                            type='button'
-                            variant='solid'
-                            borderRadius='full'
-                            colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
-                            onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_SIGNUP }))}
-                        >
-                            Signup
-                        </Button>
-                        <Button
-                            size='sm'
-                            type='button'
-                            variant='outline'
-                            borderRadius='full'
-                            colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
-                            onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_LOGIN }))}
-                        >
-                            Login
-                        </Button>
+                        {auth ? (
+                            <Menu>
+                                <MenuButton as={Button} rounded='full' variant='link' cursor='pointer' minW={0}>
+                                    <Avatar colorScheme='brand' size='sm' />
+                                </MenuButton>
+                                <MenuList alignItems='center' background={color}>
+                                    <br />
+                                    <Center>
+                                        <Avatar colorScheme='brand' size='xl' />
+                                    </Center>
+                                    <br />
+                                    <Center>
+                                        <p>{auth.username}</p>
+                                    </Center>
+                                    <br />
+                                    <MenuDivider />
+                                    <MenuItem>Account Settings</MenuItem>
+                                    <MenuItem onClick={() => handleLogout()}>Logout</MenuItem>
+                                </MenuList>
+                            </Menu>
+                        ) : (
+                            <>
+                                <Button
+                                    size='sm'
+                                    type='button'
+                                    variant='solid'
+                                    borderRadius='full'
+                                    colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
+                                    onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_SIGNUP }))}
+                                >
+                                    Signup
+                                </Button>
+                                <Button
+                                    size='sm'
+                                    type='button'
+                                    variant='outline'
+                                    borderRadius='full'
+                                    colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
+                                    onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_LOGIN }))}
+                                >
+                                    Login
+                                </Button>
+                            </>
+                        )}
                     </Stack>
                 </Flex>
             </Flex>

@@ -38,7 +38,7 @@ export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
             <VStack w='full' rowGap={2} alignItems='start'>
                 <HStack w='full'>
                     <HStack>
-                        <Avatar size='xs' name={post.topic.display_title} />
+                        <Avatar size='xs' name={post.topic.display_title} src={post.topic.image_url} />
                         <Text fontSize='sm' fontWeight='bold'>
                             a/{post.topic.display_title}
                         </Text>
