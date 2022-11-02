@@ -23,9 +23,11 @@ import { ModalTypes, showModal } from '../features/modal/modalSlice';
 import { useAppDispatch } from '../hooks/redux';
 import useAuth from '../hooks/useAuth';
 import useBackground from '../hooks/useBackground';
+import useButtonColorScheme from '../hooks/useButtonColorScheme';
 
 export default function NavBar() {
     const { colorMode, toggleColorMode } = useColorMode();
+    const colorScheme = useButtonColorScheme();
     const dispatch = useAppDispatch();
     const auth = useAuth();
     const toast = useToast();
@@ -89,7 +91,7 @@ export default function NavBar() {
                                     type='button'
                                     variant='solid'
                                     borderRadius='full'
-                                    colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
+                                    colorScheme={colorScheme}
                                     onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_SIGNUP }))}
                                 >
                                     Signup
@@ -99,7 +101,7 @@ export default function NavBar() {
                                     type='button'
                                     variant='outline'
                                     borderRadius='full'
-                                    colorScheme={colorMode === 'light' ? 'blue' : 'gray'}
+                                    colorScheme={colorScheme}
                                     onClick={() => dispatch(showModal({ type: ModalTypes.AUTH_LOGIN }))}
                                 >
                                     Login

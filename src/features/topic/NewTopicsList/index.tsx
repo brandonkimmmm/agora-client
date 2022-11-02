@@ -1,14 +1,15 @@
 import { ChevronUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Center, HStack, List, ListIcon, ListItem, Spinner, Text, useColorMode } from '@chakra-ui/react';
+import { Box, Button, Center, HStack, List, ListIcon, ListItem, Spinner, Text } from '@chakra-ui/react';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
+import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import NewTopicListItem from './NewTopicListItem';
 
 export default function NewTopicsList() {
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetTopicsQuery();
     const background = useBackground();
-    const { colorMode } = useColorMode();
+    const colorScheme = useButtonColorScheme();
 
     useEffectOnce(() => {
         trigger({ limit: 5, page: 1 });
@@ -66,7 +67,7 @@ export default function NewTopicsList() {
                             </HStack>
                         </ListItem>
                     ))}
-                    <Button colorScheme={colorMode === 'light' ? 'blue' : 'gray'} size='sm' w='full'>
+                    <Button colorScheme={colorScheme} size='sm' w='full'>
                         View All
                     </Button>
                 </List>

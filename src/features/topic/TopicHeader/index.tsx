@@ -1,13 +1,16 @@
-import { Avatar, Box, Button, Container, HStack, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Box, Button, Container, HStack, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import { GetTopicsResponseItem } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
+import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 
 export default function TopicHeader({ topic }: { topic: GetTopicsResponseItem }) {
     const background = useBackground();
+    const colorScheme = useButtonColorScheme();
+    const borderColor = useColorModeValue('blue.400', 'white');
 
     return (
         <Box background={background} width='100vw' position='relative' left='calc(-50vw + 50%)'>
-            <Box background='blue.400' height='200' width='full' position='relative'>
+            <Box background='blue.400' height='190' width='full' position='relative'>
                 <Box position='absolute' bottom={0} background={background} w='full' h='100'>
                     <Container maxW='container.lg'>
                         <HStack position='absolute' top={-8} align='end' gap={3}>
@@ -22,11 +25,17 @@ export default function TopicHeader({ topic }: { topic: GetTopicsResponseItem })
                                     <Text fontWeight='bold' fontSize='3xl'>
                                         {topic.display_title}
                                     </Text>
-                                    <Button borderRadius='full' variant='outline' size='sm' px={6}>
+                                    <Button
+                                        colorScheme={colorScheme}
+                                        borderRadius='full'
+                                        variant='outline'
+                                        size='sm'
+                                        px={6}
+                                    >
                                         Join
                                     </Button>
                                 </HStack>
-                                <Text fontSize='sm' fontWeight='semibold' color='gray.500'>
+                                <Text fontSize='sm' color='gray.500'>
                                     a/{topic.display_title}
                                 </Text>
                             </VStack>
@@ -35,6 +44,7 @@ export default function TopicHeader({ topic }: { topic: GetTopicsResponseItem })
                             variant='unstyled'
                             position='absolute'
                             borderBottom='4px'
+                            borderColor={borderColor}
                             borderRadius={0}
                             bottom={0}
                             height={6}

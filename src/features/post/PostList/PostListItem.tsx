@@ -1,23 +1,13 @@
-import {
-    Avatar,
-    Box,
-    Button,
-    HStack,
-    IconButton,
-    Image,
-    Text,
-    useColorMode,
-    useColorModeValue,
-    VStack
-} from '@chakra-ui/react';
+import { Avatar, Box, Button, HStack, IconButton, Image, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import { BiComment, BiDownvote, BiUpvote } from 'react-icons/bi';
 import { GetPostsResponseItem } from '../../../api/post';
 import useBackground from '../../../hooks/useBackground';
+import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import { getTimePassed } from '../../../utils/dayjs';
 
 export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
-    const { colorMode } = useColorMode();
     const background = useBackground();
+    const colorScheme = useButtonColorScheme();
 
     return (
         <Box display='flex' gap={2} w='full' py={3} px={2} boxShadow='md' borderRadius='md' bg={background}>
@@ -41,7 +31,7 @@ export default function PostListItem({ post }: { post: GetPostsResponseItem }) {
                         Posted by u/{post.user.username} {getTimePassed(post.created_at)}
                     </Text>
                     <Box flexGrow={1} />
-                    <Button colorScheme={colorMode === 'light' ? 'blue' : 'gray'} size='xs' borderRadius='full'>
+                    <Button colorScheme={colorScheme} size='xs' borderRadius='full'>
                         Join
                     </Button>
                 </HStack>
