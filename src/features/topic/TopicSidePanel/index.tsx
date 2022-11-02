@@ -13,6 +13,7 @@ import {
 import { TbCake } from 'react-icons/tb';
 import { GetTopicsResponseItem } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
+import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { formatDate } from '../../../utils/dayjs';
 
@@ -21,6 +22,7 @@ export default function TopicSidePanel({ topic }: { topic: GetTopicsResponseItem
     const backgroundColor = useColorModeValue('blue.600', 'black.900');
     const textColor = useTextColor();
     const headerColor = useColorModeValue('white', 'whiteAlpha.500');
+    const colorScheme = useButtonColorScheme();
 
     return (
         <Box boxShadow='md' borderRadius='md' background={background}>
@@ -66,7 +68,7 @@ export default function TopicSidePanel({ topic }: { topic: GetTopicsResponseItem
                         </Text>
                     </VStack>
                 </HStack>
-                <Button borderRadius='full' size='sm' variant='solid' w='full'>
+                <Button colorScheme={colorScheme} borderRadius='full' size='sm' variant='solid' w='full'>
                     Create Post
                 </Button>
             </VStack>
