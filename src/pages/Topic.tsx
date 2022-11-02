@@ -2,6 +2,7 @@ import { Box, Center, Spinner, Text } from '@chakra-ui/react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../api/topic';
+import PostList from '../features/post/PostList';
 import TopicHeader from '../features/topic/TopicHeader';
 import GridContainer from '../layout/GridContainer';
 import MainContainer from '../layout/MainContainer';
@@ -47,11 +48,7 @@ export default function Topic() {
         <MainContainer>
             <TopicHeader topic={data.data[0]} />
             <GridContainer
-                mainContent={
-                    <Box>
-                        <Text>HI</Text>
-                    </Box>
-                }
+                mainContent={<PostList title={data.data[0].display_title} />}
                 sideContent={
                     <Box>
                         <Text>THERE</Text>

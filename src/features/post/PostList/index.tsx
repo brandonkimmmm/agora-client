@@ -3,11 +3,11 @@ import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetPostsQuery } from '../../../api/post';
 import PostListItem from './PostListItem';
 
-export default function PostList() {
+export default function PostList({ title }: { title?: string }) {
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetPostsQuery();
 
     useEffectOnce(() => {
-        trigger({});
+        trigger({ topic_title: title });
     });
 
     if (!data || isLoading || isFetching) {
@@ -38,7 +38,7 @@ export default function PostList() {
         <List w='full' spacing={4}>
             {data.data.map((d) => (
                 <ListItem key={d.id}>
-                    <PostListItem post={d} />
+                    <PostListItem post={d} isTopicSpecific={!!title} />
                 </ListItem>
             ))}
         </List>
