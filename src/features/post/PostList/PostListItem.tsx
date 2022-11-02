@@ -1,9 +1,10 @@
-import { Avatar, Box, Button, HStack, IconButton, Image, Text, useColorModeValue, VStack } from '@chakra-ui/react';
+import { Avatar, Box, Button, HStack, IconButton, Image, Text, VStack } from '@chakra-ui/react';
 import { BiComment, BiDownvote, BiUpvote } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { GetPostsResponseItem } from '../../../api/post';
 import useBackground from '../../../hooks/useBackground';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
+import useTextColor from '../../../hooks/useTextColor';
 import { getTimePassed } from '../../../utils/dayjs';
 
 export default function PostListItem({
@@ -16,6 +17,7 @@ export default function PostListItem({
     const background = useBackground();
     const colorScheme = useButtonColorScheme();
     const navigate = useNavigate();
+    const textColor = useTextColor();
 
     const handleTopicClick = () => {
         navigate(`/a/${post.topic.display_title}`);
@@ -65,7 +67,7 @@ export default function PostListItem({
                             <Text fontSize='xs'>&#8729;</Text>
                         </>
                     )}
-                    <Text color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')} fontSize='xs'>
+                    <Text color={textColor} fontSize='xs'>
                         Posted by u/{post.user.username} {getTimePassed(post.created_at)}
                     </Text>
                     <Box flexGrow={1} />
@@ -78,7 +80,7 @@ export default function PostListItem({
                 <HStack>
                     <Button
                         colorScheme='gray'
-                        color={useColorModeValue('blackAlpha.500', 'whiteAlpha.500')}
+                        color={textColor}
                         variant='ghost'
                         p={1}
                         size='xs'
