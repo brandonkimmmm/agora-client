@@ -5,6 +5,7 @@ import {
     Button,
     Center,
     Flex,
+    HStack,
     Icon,
     IconButton,
     Menu,
@@ -18,6 +19,7 @@ import {
     useToast
 } from '@chakra-ui/react';
 import { MdWifiTethering } from 'react-icons/md';
+import { useNavigate } from 'react-router-dom';
 import { resetAuth } from '../features/auth/authSlice';
 import { ModalTypes, showModal } from '../features/modal/modalSlice';
 import { useAppDispatch } from '../hooks/redux';
@@ -32,6 +34,7 @@ export default function NavBar() {
     const auth = useAuth();
     const toast = useToast();
     const background = useBackground();
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         dispatch(resetAuth());
@@ -46,15 +49,22 @@ export default function NavBar() {
     return (
         <Box bg={background} px={4} position='fixed' top={0} width='100%' zIndex='docked'>
             <Flex h={14} alignItems='center' justifyContent='space-between'>
-                <Flex alignItems='center' gap={2}>
-                    <Center>
-                        <Icon w={6} h={6} as={MdWifiTethering} color='brand.500' />
-                    </Center>
-                    <Center>
-                        <Text fontSize='xl' fontWeight='bold'>
+                <Flex
+                    alignItems='center'
+                    gap={2}
+                    onClick={() => navigate('/')}
+                    sx={{
+                        _hover: {
+                            cursor: 'pointer'
+                        }
+                    }}
+                >
+                    <HStack align='end'>
+                        <Icon w={8} h={8} as={MdWifiTethering} color='brand.500' />
+                        <Text fontSize='xl' fontWeight='medium'>
                             Agora
                         </Text>
-                    </Center>
+                    </HStack>
                 </Flex>
                 <Flex alignItems='center'>
                     <Stack direction='row' spacing={4}>
