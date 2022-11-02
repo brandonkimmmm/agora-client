@@ -1,5 +1,6 @@
 import { ChevronUpIcon } from '@chakra-ui/icons';
 import { Box, Button, Center, HStack, List, ListIcon, ListItem, Spinner, Text } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
@@ -10,6 +11,7 @@ export default function NewTopicsList() {
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetTopicsQuery();
     const background = useBackground();
     const colorScheme = useButtonColorScheme();
+    const navigate = useNavigate();
 
     useEffectOnce(() => {
         trigger({ limit: 5, page: 1 });
@@ -39,6 +41,10 @@ export default function NewTopicsList() {
         );
     }
 
+    const handleTopicClick = (title: string) => {
+        navigate(`/a/${title}`);
+    };
+
     return (
         <Box boxShadow='md' borderRadius='md' background={background}>
             <Box
@@ -59,7 +65,15 @@ export default function NewTopicsList() {
             <Box p={4}>
                 <List spacing={4}>
                     {data.data.map((d, i) => (
-                        <ListItem key={d.id}>
+                        <ListItem
+                            key={d.id}
+                            onClick={() => handleTopicClick(d.display_title)}
+                            sx={{
+                                _hover: {
+                                    cursor: 'pointer'
+                                }
+                            }}
+                        >
                             <HStack>
                                 <Text>{i + 1}</Text>
                                 <ListIcon as={ChevronUpIcon} color='green' />
