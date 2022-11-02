@@ -14,12 +14,7 @@ export default function TopicHeader({ topic }: { topic: GetTopicsResponseItem })
                 <Box position='absolute' bottom={0} background={background} w='full' h='100'>
                     <Container maxW='container.lg'>
                         <HStack position='absolute' top={-8} align='end' gap={3}>
-                            <Avatar
-                                size='xl'
-                                name={topic.display_title}
-                                src={topic.image_url}
-                                backgroundColor='white'
-                            />
+                            <Avatar size='xl' name={topic.display_title} src={topic.image_url} />
                             <VStack align='start' spacing={-1}>
                                 <HStack gap={5}>
                                     <Text fontWeight='bold' fontSize='3xl'>
