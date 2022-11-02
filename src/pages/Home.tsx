@@ -1,5 +1,5 @@
 import PostList from '../features/post/PostList';
-import NewTopicsList from '../features/topic/NewTopicsList';
+import TrendingTopicList from '../features/topic/TrendingTopicList';
 import GridContainer from '../layout/GridContainer';
 import MainContainer from '../layout/MainContainer';
 
@@ -8,7 +8,7 @@ export default function Home() {
         <MainContainer>
             <GridContainer
                 mainContent={<PostList />}
-                sideContent={<NewTopicsList />}
+                sideContent={<TrendingTopicList />}
                 sx={{
                     pt: 8
                 }}

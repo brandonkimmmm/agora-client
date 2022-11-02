@@ -5,9 +5,9 @@ import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
-import NewTopicListItem from './NewTopicListItem';
+import TrendingTopicListItem from './TrendingTopicListItem';
 
-export default function NewTopicsList() {
+export default function TrendingTopicList() {
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetTopicsQuery();
     const background = useBackground();
     const colorScheme = useButtonColorScheme();
@@ -77,7 +77,7 @@ export default function NewTopicsList() {
                             <HStack>
                                 <Text>{i + 1}</Text>
                                 <ListIcon as={ChevronUpIcon} color='green' />
-                                <NewTopicListItem topic={d} />
+                                <TrendingTopicListItem topic={d} />
                             </HStack>
                         </ListItem>
                     ))}

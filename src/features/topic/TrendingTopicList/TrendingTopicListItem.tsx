@@ -2,7 +2,7 @@ import { Avatar, Box, Button, HStack, Text } from '@chakra-ui/react';
 import { GetTopicsResponseItem } from '../../../api/topic';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 
-export default function NewTopicListItem({ topic }: { topic: GetTopicsResponseItem }) {
+export default function TrendingTopicListItem({ topic }: { topic: GetTopicsResponseItem }) {
     const colorScheme = useButtonColorScheme();
 
     return (
