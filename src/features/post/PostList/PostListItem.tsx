@@ -6,13 +6,18 @@ import useBackground from '../../../hooks/useBackground';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { getTimePassed } from '../../../utils/dayjs';
+import PostCommentForm from '../PostCommentForm';
 
 export default function PostListItem({
     post,
-    isTopicSpecific
+    showTopic,
+    showFull,
+    showCommentForm
 }: {
     post: GetPostsResponseItem;
-    isTopicSpecific?: boolean;
+    showTopic?: boolean;
+    showFull?: boolean;
+    showCommentForm?: boolean;
 }) {
     const background = useBackground();
     const colorScheme = useButtonColorScheme();
@@ -44,7 +49,7 @@ export default function PostListItem({
             </VStack>
             <VStack w='full' rowGap={2} alignItems='start'>
                 <HStack w='full'>
-                    {!isTopicSpecific && (
+                    {showTopic && (
                         <>
                             <HStack>
                                 <Avatar
@@ -89,6 +94,7 @@ export default function PostListItem({
                         {post._count.comments} Comments
                     </Button>
                 </HStack>
+                {showCommentForm && <PostCommentForm postId={post.id} />}
             </VStack>
         </Box>
     );

@@ -11,13 +11,14 @@ import {
     VStack
 } from '@chakra-ui/react';
 import { TbCake } from 'react-icons/tb';
+import { Optional } from 'utility-types';
 import { GetTopicsResponseItem } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { formatDate } from '../../../utils/dayjs';
 
-export default function TopicSidePanel({ topic }: { topic: GetTopicsResponseItem }) {
+export default function TopicSidePanel({ topic }: { topic: Optional<GetTopicsResponseItem, '_count'> }) {
     const background = useBackground();
     const backgroundColor = useColorModeValue('blue.600', 'black.900');
     const textColor = useTextColor();

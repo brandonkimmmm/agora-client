@@ -20,6 +20,7 @@ interface GetPostsParams extends PaginationRequestParams {
     topic_id?: number;
     user_id?: number;
     topic_title?: string;
+    post_id?: number;
 }
 
 export const postApi = api.injectEndpoints({

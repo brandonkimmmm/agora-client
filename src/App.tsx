@@ -9,6 +9,7 @@ import { setCredentials } from './features/auth/authSlice';
 import RootModal from './features/modal/RootModal';
 import { useAppDispatch } from './hooks/redux';
 import Home from './pages/Home';
+import Post from './pages/Post';
 import Topic from './pages/Topic';
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
             <Routes>
                 <Route path='/' element={<Home />} />
                 <Route path='/a/:topic' element={<Topic />} />
+                <Route path='/a/:topic/comments/:post_id' element={<Post />} />
             </Routes>
         </>
     );

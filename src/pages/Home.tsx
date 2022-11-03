@@ -7,7 +7,7 @@ export default function Home() {
     return (
         <MainContainer>
             <GridContainer
-                mainContent={<PostList />}
+                mainContent={<PostList showTopic />}
                 sideContent={<TrendingTopicList />}
                 sx={{
                     pt: 8
