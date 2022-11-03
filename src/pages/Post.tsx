@@ -59,7 +59,9 @@ export default function Post() {
             <Container p={0} maxWidth='container.xl'>
                 <PostHeader post={data.data[0]} />
                 <GridContainer
-                    mainContent={<PostListItem post={data.data[0]} showCommentForm={!!auth} showTopic />}
+                    mainContent={
+                        <PostListItem post={data.data[0]} showCommentForm={!!auth} showComments showTopic hideJoin />
+                    }
                     sideContent={<TopicSidePanel topic={data.data[0].topic} showHeader buttonType='join' />}
                     gap={4}
                     sx={{

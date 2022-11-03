@@ -7,17 +7,22 @@ import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { getTimePassed } from '../../../utils/dayjs';
 import PostCommentForm from '../PostCommentForm';
+import PostCommentList from '../PostCommentList';
 
 export default function PostListItem({
     post,
     showTopic,
     showFull,
-    showCommentForm
+    showCommentForm,
+    hideJoin,
+    showComments
 }: {
     post: GetPostsResponseItem;
     showTopic?: boolean;
     showFull?: boolean;
     showCommentForm?: boolean;
+    hideJoin?: boolean;
+    showComments?: boolean;
 }) {
     const background = useBackground();
     const colorScheme = useButtonColorScheme();
@@ -75,10 +80,14 @@ export default function PostListItem({
                     <Text color={textColor} fontSize='xs'>
                         Posted by u/{post.user.username} {getTimePassed(post.created_at)}
                     </Text>
-                    <Box flexGrow={1} />
-                    <Button colorScheme={colorScheme} size='xs' borderRadius='full'>
-                        Join
-                    </Button>
+                    {!hideJoin && (
+                        <>
+                            <Box flexGrow={1} />
+                            <Button colorScheme={colorScheme} size='xs' borderRadius='full'>
+                                Join
+                            </Button>
+                        </>
+                    )}
                 </HStack>
                 <Text fontWeight='semibold'>{post.title}</Text>
                 {getPostBody()}
@@ -95,6 +104,7 @@ export default function PostListItem({
                     </Button>
                 </HStack>
                 {showCommentForm && <PostCommentForm postId={post.id} />}
+                {showComments && <PostCommentList postId={post.id} />}
             </VStack>
         </Box>
     );
