@@ -44,68 +44,70 @@ export default function PostListItem({
     };
 
     return (
-        <Box display='flex' gap={2} w='full' py={3} px={2} boxShadow='md' borderRadius='md' bg={background}>
-            <VStack gap={0.5} w='5%'>
-                <IconButton size='lg' aria-label='upvote' variant='link' icon={<BiUpvote />} />
-                <Text fontSize='md' fontWeight='bold'>
-                    {post._sum.votes}
-                </Text>
-                <IconButton size='lg' aria-label='downvote' variant='link' icon={<BiDownvote />} />
-            </VStack>
-            <VStack w='full' rowGap={2} alignItems='start'>
-                <HStack w='full'>
-                    {showTopic && (
-                        <>
-                            <HStack>
-                                <Avatar
-                                    sx={{
-                                        _hover: {
-                                            cursor: 'pointer'
-                                        }
-                                    }}
-                                    onClick={() => handleTopicClick()}
-                                    size='xs'
-                                    name={post.topic.display_title}
-                                    src={post.topic.image_url}
-                                />
-                                <Button variant='link' onClick={() => handleTopicClick()}>
-                                    <Text fontSize='sm' fontWeight='bold'>
-                                        a/{post.topic.display_title}
-                                    </Text>
-                                </Button>
-                            </HStack>
-                            <Text fontSize='xs'>&#8729;</Text>
-                        </>
-                    )}
-                    <Text color={textColor} fontSize='xs'>
-                        Posted by u/{post.user.username} {getTimePassed(post.created_at)}
+        <Box w='full' display='flex' flexDir='column' bg={background} borderRadius='md' boxShadow='md' py={3} px={2}>
+            <Box display='flex' gap={2} w='full'>
+                <VStack gap={0.5} w='6'>
+                    <IconButton size='lg' aria-label='upvote' variant='link' icon={<BiUpvote />} />
+                    <Text fontSize='md' fontWeight='bold'>
+                        {post._sum.votes}
                     </Text>
-                    {!hideJoin && (
-                        <>
-                            <Box flexGrow={1} />
-                            <Button colorScheme={colorScheme} size='xs' borderRadius='full'>
-                                Join
-                            </Button>
-                        </>
-                    )}
-                </HStack>
-                <Text fontWeight='semibold'>{post.title}</Text>
-                {getPostBody()}
-                <HStack>
-                    <Button
-                        colorScheme='gray'
-                        color={textColor}
-                        variant='ghost'
-                        p={1}
-                        size='xs'
-                        leftIcon={<BiComment />}
-                    >
-                        {post._count.comments} Comments
-                    </Button>
-                </HStack>
-                {showCommentForm && <PostCommentForm postId={post.id} />}
-                {showComments && <PostCommentList postId={post.id} />}
-            </VStack>
+                    <IconButton size='lg' aria-label='downvote' variant='link' icon={<BiDownvote />} />
+                </VStack>
+                <VStack w='full' rowGap={2} alignItems='start'>
+                    <HStack w='full'>
+                        {showTopic && (
+                            <>
+                                <HStack>
+                                    <Avatar
+                                        sx={{
+                                            _hover: {
+                                                cursor: 'pointer'
+                                            }
+                                        }}
+                                        onClick={() => handleTopicClick()}
+                                        size='xs'
+                                        name={post.topic.display_title}
+                                        src={post.topic.image_url}
+                                    />
+                                    <Button variant='link' onClick={() => handleTopicClick()}>
+                                        <Text fontSize='sm' fontWeight='bold'>
+                                            a/{post.topic.display_title}
+                                        </Text>
+                                    </Button>
+                                </HStack>
+                                <Text fontSize='xs'>&#8729;</Text>
+                            </>
+                        )}
+                        <Text color={textColor} fontSize='xs'>
+                            Posted by u/{post.user.username} {getTimePassed(post.created_at)}
+                        </Text>
+                        {!hideJoin && (
+                            <>
+                                <Box flexGrow={1} />
+                                <Button colorScheme={colorScheme} size='xs' borderRadius='full'>
+                                    Join
+                                </Button>
+                            </>
+                        )}
+                    </HStack>
+                    <Text fontWeight='semibold'>{post.title}</Text>
+                    {getPostBody()}
+                    <HStack>
+                        <Button
+                            colorScheme='gray'
+                            color={textColor}
+                            variant='ghost'
+                            p={1}
+                            size='xs'
+                            leftIcon={<BiComment />}
+                        >
+                            {post._count.comments} Comments
+                        </Button>
+                    </HStack>
+                    {showCommentForm && <PostCommentForm postId={post.id} />}
+                </VStack>
+            </Box>
+            {showComments && <PostCommentList postId={post.id} />}
         </Box>
     );
 }
