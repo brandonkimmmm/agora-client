@@ -1,4 +1,5 @@
 import {
+    Avatar,
     Badge,
     Box,
     Button,
@@ -18,7 +19,15 @@ import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { formatDate } from '../../../utils/dayjs';
 
-export default function TopicSidePanel({ topic }: { topic: Optional<GetTopicsResponseItem, '_count'> }) {
+export default function TopicSidePanel({
+    topic,
+    showHeader,
+    buttonType = 'create'
+}: {
+    topic: Optional<GetTopicsResponseItem, '_count'>;
+    showHeader?: boolean;
+    buttonType?: 'create' | 'join';
+}) {
     const background = useBackground();
     const backgroundColor = useColorModeValue('blue.600', 'black.900');
     const textColor = useTextColor();
@@ -36,12 +45,22 @@ export default function TopicSidePanel({ topic }: { topic: Optional<GetTopicsRes
                 borderTopRadius='md'
                 justifyContent='start'
             >
-                <Text color={headerColor} fontWeight='semibold' fontSize='sm'>
-                    About Community
-                </Text>
+                {!showHeader && (
+                    <Text color={headerColor} fontWeight='semibold' fontSize='sm'>
+                        About Community
+                    </Text>
+                )}
             </Center>
             <VStack px={3} py={3} divider={<StackDivider />} gap={2}>
                 <VStack align='start' w='full'>
+                    {showHeader && (
+                        <HStack spacing={1}>
+                            <Avatar size='md' name={topic.display_title} src={topic.image_url} />
+                            <Text fontWeight='bold' fontSize='md'>
+                                a/{topic.display_title}
+                            </Text>
+                        </HStack>
+                    )}
                     <Text fontSize='sm'>{topic.description}</Text>
                     <HStack spacing={1}>
                         <Icon h={6} w={6} as={TbCake} />
@@ -69,9 +88,15 @@ export default function TopicSidePanel({ topic }: { topic: Optional<GetTopicsRes
                         </Text>
                     </VStack>
                 </HStack>
-                <Button colorScheme={colorScheme} borderRadius='full' size='sm' variant='solid' w='full'>
-                    Create Post
-                </Button>
+                {buttonType === 'create' ? (
+                    <Button colorScheme={colorScheme} borderRadius='full' size='sm' variant='solid' w='full'>
+                        Create Post
+                    </Button>
+                ) : (
+                    <Button colorScheme={colorScheme} borderRadius='full' size='sm' variant='outline' w='full'>
+                        Join
+                    </Button>
+                )}
             </VStack>
         </Box>
     );

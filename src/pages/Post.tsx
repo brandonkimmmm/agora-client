@@ -60,7 +60,7 @@ export default function Post() {
                 <PostHeader post={data.data[0]} />
                 <GridContainer
                     mainContent={<PostListItem post={data.data[0]} showCommentForm={!!auth} showTopic />}
-                    sideContent={<TopicSidePanel topic={data.data[0].topic} />}
+                    sideContent={<TopicSidePanel topic={data.data[0].topic} showHeader buttonType='join' />}
                     gap={4}
                     sx={{
                         px: 28,
