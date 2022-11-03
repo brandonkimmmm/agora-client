@@ -1,4 +1,4 @@
-import { Center, Container, Spinner, Text } from '@chakra-ui/react';
+import { Center, Container, Spinner, Text, useColorModeValue } from '@chakra-ui/react';
 import { isFinite } from 'lodash';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffectOnce } from 'usehooks-ts';
@@ -15,6 +15,7 @@ export default function Post() {
     const navigate = useNavigate();
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetPostsQuery();
     const auth = useAuth();
+    const gridBackground = useColorModeValue('gray.700', 'rgb(3,3,3)');
 
     useEffectOnce(() => {
         if (!topic || !post_id) {
@@ -54,8 +55,8 @@ export default function Post() {
     }
 
     return (
-        <MainContainer maxW='full' background='gray.800' pb={0}>
-            <Container backgroundColor='blue' p={0} maxWidth='container.xl'>
+        <MainContainer maxW='full' background='gray.900' pb={0}>
+            <Container p={0} maxWidth='container.xl'>
                 <PostHeader post={data.data[0]} />
                 <GridContainer
                     mainContent={<PostListItem post={data.data[0]} showCommentForm={!!auth} showTopic />}
@@ -64,7 +65,7 @@ export default function Post() {
                     sx={{
                         px: 28,
                         py: 8,
-                        background: 'gray.700'
+                        background: gridBackground
                     }}
                 />
             </Container>

@@ -6,7 +6,7 @@ import { GetPostsResponseItem } from '../../../api/post';
 
 export default function PostHeader({ post }: { post: GetPostsResponseItem }) {
     return (
-        <HStack w='full' background='black' px={28} py={2}>
+        <HStack w='full' background='rgb(3,3,3)' px={28} py={2}>
             <HStack borderX='1px' borderColor='gray.500' spacing={0}>
                 <IconButton color='white' size='lg' aria-label='upvote' variant='link' icon={<BiUpvote />} />
                 <Text fontSize='sm' color='white'>

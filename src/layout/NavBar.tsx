@@ -48,7 +48,7 @@ export default function NavBar() {
 
     return (
         <Box bg={background} px={4} position='fixed' top={0} width='100%' zIndex='docked'>
-            <Flex h={14} alignItems='center' justifyContent='space-between'>
+            <Flex h={12} alignItems='center' justifyContent='space-between'>
                 <Flex
                     alignItems='center'
                     gap={2}

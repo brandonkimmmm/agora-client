@@ -16,7 +16,7 @@ export default function MainContainer({
     return (
         <Box>
             <NavBar />
-            <Container background={background} maxW={maxW} pt={14} pb={pb} minH='100vh'>
+            <Container background={background} maxW={maxW} pt={12} pb={pb} minH='100vh'>
                 {children}
             </Container>
         </Box>
