@@ -21,7 +21,7 @@ export default function PostCommentList({ postId }: { postId: number }) {
     const [filter, setFilter] = useState<string>('best');
     return (
         <VStack w='full' align='start'>
-            <Box ml='8' w='full'>
+            <Box pl='8' w='full'>
                 <Menu>
                     <MenuButton size='xs' as={Button} rightIcon={<TriangleDownIcon />}>
                         Sort by: {capitalize(filter)}
