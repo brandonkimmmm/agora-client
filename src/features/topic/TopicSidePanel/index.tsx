@@ -3,6 +3,7 @@ import { TbCake } from 'react-icons/tb';
 import { Optional } from 'utility-types';
 import { GetTopicsResponseItem } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
+import useBorder from '../../../hooks/useBorder';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { formatDate } from '../../../utils/dayjs';
@@ -19,9 +20,10 @@ export default function TopicSidePanel({
     const background = useBackground();
     const textColor = useTextColor();
     const colorScheme = useButtonColorScheme();
+    const [borderColor] = useBorder();
 
     return (
-        <Box boxShadow='md' borderRadius='md' background={background}>
+        <Box boxShadow='md' borderRadius='md' background={background} border='1px' borderColor={borderColor}>
             <Center
                 height='12'
                 backgroundColor='blue.600'

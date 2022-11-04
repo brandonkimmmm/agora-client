@@ -25,6 +25,7 @@ import { ModalTypes, showModal } from '../features/modal/modalSlice';
 import { useAppDispatch } from '../hooks/redux';
 import useAuth from '../hooks/useAuth';
 import useBackground from '../hooks/useBackground';
+import useBorder from '../hooks/useBorder';
 import useButtonColorScheme from '../hooks/useButtonColorScheme';
 
 export default function NavBar() {
@@ -35,6 +36,7 @@ export default function NavBar() {
     const toast = useToast();
     const background = useBackground();
     const navigate = useNavigate();
+    const [borderColor] = useBorder();
 
     const handleLogout = () => {
         dispatch(resetAuth());
@@ -47,7 +49,16 @@ export default function NavBar() {
     };
 
     return (
-        <Box bg={background} px={4} position='fixed' top={0} width='100%' zIndex='docked'>
+        <Box
+            bg={background}
+            px={4}
+            position='fixed'
+            top={0}
+            width='100%'
+            zIndex='docked'
+            borderBottom='1px'
+            borderColor={borderColor}
+        >
             <Flex h={12} alignItems='center' justifyContent='space-between'>
                 <Flex
                     alignItems='center'

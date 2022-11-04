@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
+import useBorder from '../../../hooks/useBorder';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import TrendingTopicListItem from './TrendingTopicListItem';
 
@@ -12,6 +13,7 @@ export default function TrendingTopicList() {
     const background = useBackground();
     const colorScheme = useButtonColorScheme();
     const navigate = useNavigate();
+    const [borderColor] = useBorder();
 
     useEffectOnce(() => {
         trigger({ limit: 5, page: 1 });
@@ -90,7 +92,7 @@ export default function TrendingTopicList() {
     };
 
     return (
-        <Box boxShadow='md' borderRadius='md' background={background}>
+        <Box boxShadow='md' borderRadius='md' background={background} border='1px' borderColor={borderColor}>
             <Box
                 height='24'
                 backgroundImage="linear-gradient(to bottom, rgba(245, 246, 252, 0.52), rgba(40, 40, 40, 0.73)), url('/agora-vector-bg.jpg')"
