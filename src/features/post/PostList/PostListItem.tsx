@@ -1,9 +1,22 @@
-import { Avatar, Box, Button, HStack, IconButton, Image, Skeleton, Text, VStack } from '@chakra-ui/react';
+import {
+    Avatar,
+    Box,
+    Button,
+    HStack,
+    IconButton,
+    Image,
+    LinkBox,
+    LinkOverlay,
+    Skeleton,
+    Text,
+    VStack
+} from '@chakra-ui/react';
 import { useState } from 'react';
 import { BiComment, BiDownvote, BiUpvote } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { GetPostsResponseItem } from '../../../api/post';
 import useBackground from '../../../hooks/useBackground';
+import useBorder from '../../../hooks/useBorder';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { getTimePassed } from '../../../utils/dayjs';
@@ -30,9 +43,14 @@ export default function PostListItem({
     const navigate = useNavigate();
     const textColor = useTextColor();
     const [isLoading, setIsLoading] = useState(true);
+    const [borderColor, hoverColor] = useBorder();
 
     const handleTopicClick = () => {
         navigate(`/a/${post.topic.display_title}`);
+    };
+
+    const handlePostClick = () => {
+        navigate(`/a/${post.topic.display_title}/comments/${post.id}`);
     };
 
     const getPostBody = () => {
@@ -83,8 +101,28 @@ export default function PostListItem({
     };
 
     return (
-        <Box w='full' display='flex' flexDir='column' bg={background} borderRadius='md' boxShadow='md' py={3} px={2}>
+        <LinkBox
+            w='full'
+            display='flex'
+            flexDir='column'
+            bg={background}
+            borderRadius='md'
+            boxShadow='md'
+            border='1px'
+            borderColor={borderColor}
+            py={3}
+            px={2}
+            sx={{
+                _hover: !showFull
+                    ? {
+                          cursor: 'pointer',
+                          borderColor: hoverColor
+                      }
+                    : {}
+            }}
+        >
             <Box display='flex' gap={2} w='full'>
+                {!showFull && <LinkOverlay onClick={() => handlePostClick()} />}
                 <VStack gap={0.5} w='6'>
                     <IconButton size='lg' aria-label='upvote' variant='link' icon={<BiUpvote />} />
                     <Text fontSize='md' fontWeight='bold'>
@@ -96,19 +134,9 @@ export default function PostListItem({
                     <HStack w='full'>
                         {showTopic && (
                             <>
-                                <HStack>
-                                    <Avatar
-                                        sx={{
-                                            _hover: {
-                                                cursor: 'pointer'
-                                            }
-                                        }}
-                                        onClick={() => handleTopicClick()}
-                                        size='xs'
-                                        name={post.topic.display_title}
-                                        src={post.topic.image_url}
-                                    />
-                                    <Button variant='link' onClick={() => handleTopicClick()}>
+                                <HStack sx={{ _hover: { cursor: 'pointer' } }} onClick={() => handleTopicClick()}>
+                                    <Avatar size='xs' name={post.topic.display_title} src={post.topic.image_url} />
+                                    <Button variant='link'>
                                         <Text fontSize='sm' fontWeight='bold'>
                                             a/{post.topic.display_title}
                                         </Text>
@@ -147,6 +175,6 @@ export default function PostListItem({
                 </VStack>
             </Box>
             {showComments && <PostCommentList postId={post.id} />}
-        </Box>
+        </LinkBox>
     );
 }

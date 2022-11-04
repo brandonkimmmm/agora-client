@@ -20,7 +20,7 @@ import { useState } from 'react';
 export default function PostCommentList({ postId }: { postId: number }) {
     const [filter, setFilter] = useState<string>('best');
     return (
-        <VStack w='full' align='start'>
+        <VStack w='full' align='start' mt={2}>
             <Box pl='8' w='full'>
                 <Menu>
                     <MenuButton size='xs' as={Button} rightIcon={<TriangleDownIcon />}>
