@@ -34,12 +34,27 @@ export default function PostListItem({
     };
 
     const getPostBody = () => {
+        if (showFull) {
+            return (
+                <HStack align='start'>
+                    {post.media_url && (
+                        <Image src={post.media_url} alt={post.title} loading='lazy' w='full' objectFit='contain' />
+                    )}
+                    <Text fontSize='sm'>{post.body}</Text>
+                </HStack>
+            );
+        }
         if (post.media_url) {
             return <Image src={post.media_url} alt={post.title} loading='lazy' w='full' objectFit='contain' />;
         }
         if (post.body) {
-            return <Text fontSize='sm'>{post.body}</Text>;
+            return (
+                <Text noOfLines={3} fontSize='sm'>
+                    {post.body}
+                </Text>
+            );
         }
+
         return null;
     };
 
