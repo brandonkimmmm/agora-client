@@ -1,5 +1,5 @@
 import { ChevronUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Center, HStack, List, ListIcon, ListItem, Spinner, Text } from '@chakra-ui/react';
+import { Box, Button, Center, HStack, List, ListIcon, ListItem, Skeleton, Text } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../../../api/topic';
@@ -17,32 +17,76 @@ export default function TrendingTopicList() {
         trigger({ limit: 5, page: 1 });
     });
 
-    if (!data || isLoading || isFetching) {
-        return (
-            <Center>
-                <Spinner />
-            </Center>
-        );
-    }
-
-    if (data.data.length === 0) {
-        return (
-            <Center>
-                <Text>No data found!</Text>
-            </Center>
-        );
-    }
-
-    if (isError) {
-        return (
-            <Center>
-                <Text>Error</Text>
-            </Center>
-        );
-    }
-
     const handleTopicClick = (title: string) => {
         navigate(`/a/${title}`);
+    };
+
+    const getContent = () => {
+        if (!data || isLoading || isFetching) {
+            return (
+                <>
+                    <ListItem>
+                        <Skeleton h='5' w='full' />
+                    </ListItem>
+                    <ListItem>
+                        <Skeleton h='5' w='full' />
+                    </ListItem>
+                    <ListItem>
+                        <Skeleton h='5' w='full' />
+                    </ListItem>
+                    <ListItem>
+                        <Skeleton h='5' w='full' />
+                    </ListItem>
+                    <ListItem>
+                        <Skeleton h='5' w='full' />
+                    </ListItem>
+                    <ListItem>
+                        <Skeleton h='10' w='full' />
+                    </ListItem>
+                </>
+            );
+        }
+
+        if (data.data.length === 0) {
+            return (
+                <Center>
+                    <Text>No data found!</Text>
+                </Center>
+            );
+        }
+
+        if (isError) {
+            return (
+                <Center>
+                    <Text>Error</Text>
+                </Center>
+            );
+        }
+
+        return (
+            <>
+                {data.data.map((d, i) => (
+                    <ListItem
+                        key={d.id}
+                        onClick={() => handleTopicClick(d.display_title)}
+                        sx={{
+                            _hover: {
+                                cursor: 'pointer'
+                            }
+                        }}
+                    >
+                        <HStack>
+                            <Text>{i + 1}</Text>
+                            <ListIcon as={ChevronUpIcon} color='green' />
+                            <TrendingTopicListItem topic={d} />
+                        </HStack>
+                    </ListItem>
+                ))}
+                <Button colorScheme={colorScheme} size='sm' w='full'>
+                    View All
+                </Button>
+            </>
+        );
     };
 
     return (
@@ -63,28 +107,7 @@ export default function TrendingTopicList() {
                 </Text>
             </Box>
             <Box p={4}>
-                <List spacing={4}>
-                    {data.data.map((d, i) => (
-                        <ListItem
-                            key={d.id}
-                            onClick={() => handleTopicClick(d.display_title)}
-                            sx={{
-                                _hover: {
-                                    cursor: 'pointer'
-                                }
-                            }}
-                        >
-                            <HStack>
-                                <Text>{i + 1}</Text>
-                                <ListIcon as={ChevronUpIcon} color='green' />
-                                <TrendingTopicListItem topic={d} />
-                            </HStack>
-                        </ListItem>
-                    ))}
-                    <Button colorScheme={colorScheme} size='sm' w='full'>
-                        View All
-                    </Button>
-                </List>
+                <List spacing={4}>{getContent()}</List>
             </Box>
         </Box>
     );

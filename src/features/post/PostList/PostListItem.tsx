@@ -1,4 +1,5 @@
-import { Avatar, Box, Button, HStack, IconButton, Image, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Box, Button, HStack, IconButton, Image, Skeleton, Text, VStack } from '@chakra-ui/react';
+import { useState } from 'react';
 import { BiComment, BiDownvote, BiUpvote } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
 import { GetPostsResponseItem } from '../../../api/post';
@@ -28,6 +29,7 @@ export default function PostListItem({
     const colorScheme = useButtonColorScheme();
     const navigate = useNavigate();
     const textColor = useTextColor();
+    const [isLoading, setIsLoading] = useState(true);
 
     const handleTopicClick = () => {
         navigate(`/a/${post.topic.display_title}`);
@@ -36,16 +38,38 @@ export default function PostListItem({
     const getPostBody = () => {
         if (showFull) {
             return (
-                <HStack align='start'>
-                    {post.media_url && (
-                        <Image src={post.media_url} alt={post.title} loading='lazy' w='full' objectFit='contain' />
-                    )}
+                <VStack align='start' gap={2}>
                     <Text fontSize='sm'>{post.body}</Text>
-                </HStack>
+                    {post.media_url && (
+                        <Skeleton w='full' minH='fit-content' isLoaded={!isLoading}>
+                            <Image
+                                src={post.media_url}
+                                alt={post.title}
+                                loading='lazy'
+                                w='full'
+                                height={isLoading ? '400' : undefined}
+                                onLoad={() => setIsLoading(false)}
+                                objectFit='contain'
+                            />
+                        </Skeleton>
+                    )}
+                </VStack>
             );
         }
         if (post.media_url) {
-            return <Image src={post.media_url} alt={post.title} loading='lazy' w='full' objectFit='contain' />;
+            return (
+                <Skeleton w='full' minH='fit-content' isLoaded={!isLoading}>
+                    <Image
+                        src={post.media_url}
+                        alt={post.title}
+                        loading='lazy'
+                        w='full'
+                        height={isLoading ? '400' : undefined}
+                        onLoad={() => setIsLoading(false)}
+                        objectFit='contain'
+                    />
+                </Skeleton>
+            );
         }
         if (post.body) {
             return (

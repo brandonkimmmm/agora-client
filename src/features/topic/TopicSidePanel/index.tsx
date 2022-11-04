@@ -1,16 +1,4 @@
-import {
-    Avatar,
-    Badge,
-    Box,
-    Button,
-    Center,
-    HStack,
-    Icon,
-    StackDivider,
-    Text,
-    useColorModeValue,
-    VStack
-} from '@chakra-ui/react';
+import { Avatar, Badge, Box, Button, Center, HStack, Icon, StackDivider, Text, VStack } from '@chakra-ui/react';
 import { TbCake } from 'react-icons/tb';
 import { Optional } from 'utility-types';
 import { GetTopicsResponseItem } from '../../../api/topic';
@@ -29,16 +17,14 @@ export default function TopicSidePanel({
     buttonType?: 'create' | 'join';
 }) {
     const background = useBackground();
-    const backgroundColor = useColorModeValue('blue.600', 'black.900');
     const textColor = useTextColor();
-    const headerColor = useColorModeValue('white', 'whiteAlpha.500');
     const colorScheme = useButtonColorScheme();
 
     return (
         <Box boxShadow='md' borderRadius='md' background={background}>
             <Center
                 height='12'
-                backgroundColor={backgroundColor}
+                backgroundColor='blue.600'
                 display='flex'
                 py={1}
                 px={3}
@@ -46,7 +32,7 @@ export default function TopicSidePanel({
                 justifyContent='start'
             >
                 {!showHeader && (
-                    <Text color={headerColor} fontWeight='semibold' fontSize='sm'>
+                    <Text color='white' fontWeight='semibold' fontSize='sm'>
                         About Community
                     </Text>
                 )}

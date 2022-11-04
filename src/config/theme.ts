@@ -25,6 +25,12 @@ const components = {
                 }
             }
         }
+    },
+    Skeleton: {
+        defaultProps: {
+            startColor: 'gray.100',
+            endColor: 'gray.600'
+        }
     }
 };
 
