@@ -1,5 +1,5 @@
 import api from '../redux/rtk';
-import { IPost, ITopic, IUser, PaginationRequestParams, PaginationResponseData } from '../types';
+import { IComment, IPost, ITopic, IUser, PaginationRequestParams, PaginationResponseData } from '../types';
 
 export interface GetPostsResponseItem extends IPost {
     user: Pick<IUser, 'id' | 'username'>;
@@ -12,6 +12,16 @@ export interface GetPostsResponseItem extends IPost {
     _sum: {
         votes: number;
     };
+}
+
+export interface GetPostCommentsResponseItem extends IComment {
+    user: Pick<IUser, 'id' | 'username'>;
+}
+
+type GetPostCommentsResponse = PaginationResponseData<GetPostCommentsResponseItem>;
+
+interface GetPostCommentsParams extends PaginationRequestParams {
+    post_id: number;
 }
 
 type GetPostsResponse = PaginationResponseData<GetPostsResponseItem>;
@@ -32,8 +42,16 @@ export const postApi = api.injectEndpoints({
             }),
             providesTags: (result, error, arg) =>
                 result ? [...result.data.map(({ id }) => ({ type: 'Post' as const, id })), 'Post'] : ['Post']
+        }),
+        getPostComments: builder.query<GetPostCommentsResponse, GetPostCommentsParams>({
+            query: ({ post_id, ...params }) => ({
+                url: `/posts/${post_id}/comments`,
+                params
+            }),
+            providesTags: (result, error, arg) =>
+                result ? [...result.data.map(({ id }) => ({ type: 'Comment' as const, id })), 'Comment'] : ['Comment']
         })
     })
 });
 
-export const { useLazyGetPostsQuery } = postApi;
+export const { useLazyGetPostsQuery, useLazyGetPostCommentsQuery } = postApi;

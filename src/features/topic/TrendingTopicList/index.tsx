@@ -49,7 +49,7 @@ export default function TrendingTopicList() {
             );
         }
 
-        if (data.data.length === 0) {
+        if (data.count === 0) {
             return (
                 <Center>
                     <Text>No data found!</Text>
