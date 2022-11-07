@@ -46,6 +46,7 @@ export default function NavBar() {
             duration: 9000,
             isClosable: true
         });
+        navigate(0);
     };
 
     return (

@@ -13,6 +13,7 @@ import {
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { useLoginMutation } from '../../../api/auth';
 import { getErrorMessage } from '../../../api/helpers';
 import { useAppDispatch } from '../../../hooks/redux';
@@ -25,6 +26,7 @@ export default function LoginForm() {
     const dispatch = useAppDispatch();
     const [postLogin] = useLoginMutation();
     // const { isOpen, onClose } = useDisclosure({ defaultIsOpen: true });
+    const navigate = useNavigate();
     const toast = useToast();
     const {
         handleSubmit,
@@ -46,6 +48,7 @@ export default function LoginForm() {
                 duration: 9000,
                 isClosable: true
             });
+            navigate(0);
         } catch (err) {
             toast({
                 title: 'Failed to login',
