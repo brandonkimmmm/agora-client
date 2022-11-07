@@ -31,7 +31,7 @@ export default function Vote({
         if (userValue === -1) {
             return 'orange.500';
         }
-        return undefined;
+        return textColor;
     };
 
     return (
@@ -44,7 +44,7 @@ export default function Vote({
                 icon={<BiUpvote />}
                 onClick={onUpvoteClick}
             />
-            <Text color={textColor || getColor()} fontSize={fontSize} fontWeight='bold'>
+            <Text color={getColor()} fontSize={fontSize} fontWeight='bold'>
                 {value}
             </Text>
             <IconButton
