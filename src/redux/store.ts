@@ -12,9 +12,9 @@ const appReducer = combineReducers({
 export type RootState = ReturnType<typeof appReducer>;
 
 const rootReducer: Reducer = (state: RootState, action: AnyAction) => {
-    // if (action.type === 'auth/resetAuth') {
-    //     state = {} as RootState;
-    // }
+    if (action.type === 'auth/resetAuth') {
+        state = {} as RootState;
+    }
     return appReducer(state, action);
 };
 

@@ -1,20 +1,15 @@
-import {
-    Avatar,
-    Box,
-    Button,
-    HStack,
-    IconButton,
-    Image,
-    LinkBox,
-    LinkOverlay,
-    Skeleton,
-    Text,
-    VStack
-} from '@chakra-ui/react';
+import { Avatar, Box, Button, HStack, Image, LinkBox, LinkOverlay, Skeleton, Text, VStack } from '@chakra-ui/react';
 import { useState } from 'react';
-import { BiComment, BiDownvote, BiUpvote } from 'react-icons/bi';
+import { BiComment } from 'react-icons/bi';
 import { useNavigate } from 'react-router-dom';
-import { GetPostsResponseItem } from '../../../api/post';
+import {
+    GetPostsResponseItem,
+    usePutPostDownvoteMutation,
+    usePutPostResetVoteMutation,
+    usePutPostUpvoteMutation
+} from '../../../api/post';
+import Vote from '../../../components/Vote';
+import useAuth from '../../../hooks/useAuth';
 import useBackground from '../../../hooks/useBackground';
 import useBorder from '../../../hooks/useBorder';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
@@ -44,6 +39,10 @@ export default function PostListItem({
     const textColor = useTextColor();
     const [isLoading, setIsLoading] = useState(true);
     const [borderColor, hoverColor] = useBorder();
+    const auth = useAuth();
+    const [putPostUpvote] = usePutPostUpvoteMutation();
+    const [putPostDownvote] = usePutPostDownvoteMutation();
+    const [putPostResetVote] = usePutPostResetVoteMutation();
 
     const handleTopicClick = () => {
         navigate(`/a/${post.topic.display_title}`);
@@ -51,6 +50,26 @@ export default function PostListItem({
 
     const handlePostClick = () => {
         navigate(`/a/${post.topic.display_title}/comments/${post.id}`);
+    };
+
+    const handleUpvoteClick = () => {
+        if (auth) {
+            if (post.user_vote === 1) {
+                putPostResetVote(post.id);
+            } else {
+                putPostUpvote(post.id);
+            }
+        }
+    };
+
+    const handleDownvoteClick = () => {
+        if (auth) {
+            if (post.user_vote === -1) {
+                putPostResetVote(post.id);
+            } else {
+                putPostDownvote(post.id);
+            }
+        }
     };
 
     const getPostBody = () => {
@@ -123,13 +142,17 @@ export default function PostListItem({
         >
             <Box display='flex' gap={2} w='full'>
                 {!showFull && <LinkOverlay onClick={() => handlePostClick()} />}
-                <VStack gap={0.5} w='6'>
-                    <IconButton size='lg' aria-label='upvote' variant='link' icon={<BiUpvote />} />
-                    <Text fontSize='md' fontWeight='bold'>
-                        {post._sum.votes}
-                    </Text>
-                    <IconButton size='lg' aria-label='downvote' variant='link' icon={<BiDownvote />} />
-                </VStack>
+                <Vote
+                    value={post._sum.votes}
+                    userValue={post.user_vote}
+                    direction='column'
+                    sx={{
+                        gap: 0.5,
+                        width: 6
+                    }}
+                    onUpvoteClick={handleUpvoteClick}
+                    onDownvoteClick={handleDownvoteClick}
+                />
                 <VStack w='full' rowGap={2} alignItems='start'>
                     <HStack w='full'>
                         {showTopic && (
