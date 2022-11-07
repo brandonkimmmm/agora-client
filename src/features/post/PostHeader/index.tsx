@@ -2,9 +2,12 @@ import { CloseIcon } from '@chakra-ui/icons';
 import { Box, Button, HStack, Icon, IconButton, Text } from '@chakra-ui/react';
 import { BiDownvote, BiUpvote } from 'react-icons/bi';
 import { TiDocumentText } from 'react-icons/ti';
+import { useNavigate } from 'react-router-dom';
 import { GetPostsResponseItem } from '../../../api/post';
 
 export default function PostHeader({ post }: { post: GetPostsResponseItem }) {
+    const navigate = useNavigate();
+
     return (
         <HStack w='full' background='rgb(3,3,3)' px={28} py={2}>
             <HStack borderX='1px' borderColor='gray.500' spacing={0}>
@@ -25,6 +28,7 @@ export default function PostHeader({ post }: { post: GetPostsResponseItem }) {
                 size='xs'
                 variant='link'
                 color='white'
+                onClick={() => navigate(-1)}
                 leftIcon={<CloseIcon />}
                 sx={{
                     _hover: {
