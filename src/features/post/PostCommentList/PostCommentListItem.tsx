@@ -1,9 +1,40 @@
-import { Avatar, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
-import { BiDownvote, BiUpvote } from 'react-icons/bi';
-import { GetPostCommentsResponseItem } from '../../../api/post';
+import { Avatar, HStack, Text, VStack } from '@chakra-ui/react';
+import {
+    GetPostCommentsResponseItem,
+    usePutPostCommentDownvoteMutation,
+    usePutPostCommentResetVoteMutation,
+    usePutPostCommentUpvoteMutation
+} from '../../../api/post';
+import Vote from '../../../components/Vote';
+import useAuth from '../../../hooks/useAuth';
 import { getTimePassed } from '../../../utils/dayjs';
 
 export default function PostCommentListItem({ comment }: { comment: GetPostCommentsResponseItem }) {
+    const [putPostCommentUpvote] = usePutPostCommentUpvoteMutation();
+    const [putPostCommentDownvote] = usePutPostCommentDownvoteMutation();
+    const [putPostCommentReset] = usePutPostCommentResetVoteMutation();
+    const auth = useAuth();
+
+    const handleUpvoteClick = () => {
+        if (auth) {
+            if (comment.user_vote === 1) {
+                putPostCommentReset({ post_id: comment.post.id, comment_id: comment.id });
+            } else {
+                putPostCommentUpvote({ post_id: comment.post.id, comment_id: comment.id });
+            }
+        }
+    };
+
+    const handleDownvoteClick = () => {
+        if (auth) {
+            if (comment.user_vote === -1) {
+                putPostCommentReset({ post_id: comment.post.id, comment_id: comment.id });
+            } else {
+                putPostCommentDownvote({ post_id: comment.post.id, comment_id: comment.id });
+            }
+        }
+    };
+
     return (
         <HStack align='start' gap={2}>
             <Avatar size='xs' name={comment.user.username} />
@@ -15,13 +46,18 @@ export default function PostCommentListItem({ comment }: { comment: GetPostComme
                     <Text fontSize='xs'>{getTimePassed(comment.created_at)}</Text>
                 </HStack>
                 <Text fontSize='sm'>{comment.body}</Text>
-                <HStack spacing={0} pt={2}>
-                    <IconButton size='md' aria-label='upvote' variant='link' icon={<BiUpvote />} />
-                    <Text fontSize='sm' fontWeight='bold'>
-                        10
-                    </Text>
-                    <IconButton size='lg' aria-label='downvote' variant='link' icon={<BiDownvote />} />
-                </HStack>
+                <Vote
+                    direction='row'
+                    value={comment._sum.votes}
+                    userValue={comment.user_vote}
+                    sx={{
+                        pt: 2
+                    }}
+                    fontSize='sm'
+                    iconSize='md'
+                    onUpvoteClick={handleUpvoteClick}
+                    onDownvoteClick={handleDownvoteClick}
+                />
             </VStack>
         </HStack>
     );

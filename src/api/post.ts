@@ -17,6 +17,11 @@ export interface GetPostsResponseItem extends IPost {
 
 export interface GetPostCommentsResponseItem extends IComment {
     user: Pick<IUser, 'id' | 'username'>;
+    _sum: {
+        votes: number;
+    };
+    post: Pick<IPost, 'id'>;
+    user_vote: IVote['value'] | null;
 }
 
 type GetPostCommentsResponse = PaginationResponseData<GetPostCommentsResponseItem>;
@@ -34,7 +39,14 @@ interface GetPostsParams extends PaginationRequestParams {
     post_id?: number;
 }
 
-type PutVoteResponse = Pick<GetPostsResponseItem, 'id' | '_sum' | 'user_vote'>;
+type PutPostVoteResponse = Pick<GetPostsResponseItem, 'id' | '_sum' | 'user_vote'>;
+
+type PutPostCommentVoteResponse = Pick<GetPostCommentsResponseItem, 'id' | '_sum' | 'user_vote'>;
+
+type PutPostCommentVoteParams = {
+    post_id: number;
+    comment_id: number;
+};
 
 export const postApi = api.injectEndpoints({
     endpoints: (builder) => ({
@@ -54,7 +66,7 @@ export const postApi = api.injectEndpoints({
             providesTags: (result, error, arg) =>
                 result ? [...result.data.map(({ id }) => ({ type: 'Comment' as const, id })), 'Comment'] : ['Comment']
         }),
-        putPostUpvote: builder.mutation<PutVoteResponse, number>({
+        putPostUpvote: builder.mutation<PutPostVoteResponse, number>({
             query: (postId) => ({
                 url: `/posts/${postId}/vote/up`,
                 method: 'PUT'
@@ -80,7 +92,7 @@ export const postApi = api.injectEndpoints({
                 }
             }
         }),
-        putPostDownvote: builder.mutation<PutVoteResponse, number>({
+        putPostDownvote: builder.mutation<PutPostVoteResponse, number>({
             query: (postId) => ({
                 url: `/posts/${postId}/vote/down`,
                 method: 'PUT'
@@ -106,7 +118,7 @@ export const postApi = api.injectEndpoints({
                 }
             }
         }),
-        putPostResetVote: builder.mutation<PutVoteResponse, number>({
+        putPostResetVote: builder.mutation<PutPostVoteResponse, number>({
             query: (postId) => ({
                 url: `/posts/${postId}/vote/reset`,
                 method: 'PUT'
@@ -131,6 +143,69 @@ export const postApi = api.injectEndpoints({
                     //
                 }
             }
+        }),
+        putPostCommentUpvote: builder.mutation<PutPostCommentVoteResponse, PutPostCommentVoteParams>({
+            query: ({ post_id, comment_id }) => ({
+                url: `/posts/${post_id}/comments/${comment_id}/vote/up`,
+                method: 'PUT'
+            }),
+            async onQueryStarted({ post_id, comment_id }, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        postApi.util.updateQueryData('getPostComments', { post_id }, (draft) => {
+                            const index = draft.data.findIndex((i) => i.id === comment_id);
+                            if (index > -1) {
+                                Object.assign(draft.data[index], data);
+                            }
+                        })
+                    );
+                } catch {
+                    //
+                }
+            }
+        }),
+        putPostCommentDownvote: builder.mutation<PutPostCommentVoteResponse, PutPostCommentVoteParams>({
+            query: ({ post_id, comment_id }) => ({
+                url: `/posts/${post_id}/comments/${comment_id}/vote/down`,
+                method: 'PUT'
+            }),
+            async onQueryStarted({ post_id, comment_id }, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        postApi.util.updateQueryData('getPostComments', { post_id }, (draft) => {
+                            const index = draft.data.findIndex((i) => i.id === comment_id);
+                            if (index > -1) {
+                                Object.assign(draft.data[index], data);
+                            }
+                        })
+                    );
+                } catch {
+                    //
+                }
+            }
+        }),
+        putPostCommentResetVote: builder.mutation<PutPostCommentVoteResponse, PutPostCommentVoteParams>({
+            query: ({ post_id, comment_id }) => ({
+                url: `/posts/${post_id}/comments/${comment_id}/vote/reset`,
+                method: 'PUT'
+            }),
+            async onQueryStarted({ post_id, comment_id }, { dispatch, queryFulfilled }) {
+                try {
+                    const { data } = await queryFulfilled;
+                    dispatch(
+                        postApi.util.updateQueryData('getPostComments', { post_id }, (draft) => {
+                            const index = draft.data.findIndex((i) => i.id === comment_id);
+                            if (index > -1) {
+                                Object.assign(draft.data[index], data);
+                            }
+                        })
+                    );
+                } catch {
+                    //
+                }
+            }
         })
     })
 });
@@ -140,5 +215,8 @@ export const {
     useLazyGetPostCommentsQuery,
     usePutPostDownvoteMutation,
     usePutPostUpvoteMutation,
-    usePutPostResetVoteMutation
+    usePutPostResetVoteMutation,
+    usePutPostCommentDownvoteMutation,
+    usePutPostCommentResetVoteMutation,
+    usePutPostCommentUpvoteMutation
 } = postApi;

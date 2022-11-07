@@ -32,7 +32,7 @@ export default function Post() {
             if (!isFinite(parsedPostId)) {
                 navigate('/');
             } else {
-                trigger({ topic_title: topic, post_id: parsedPostId }, true);
+                trigger({ post_id: parsedPostId }, true);
             }
         }
     });
