@@ -1,6 +1,5 @@
-import { Center, Container, Spinner, Text, useColorModeValue, useOutsideClick } from '@chakra-ui/react';
+import { Center, Container, Spinner, Text, useColorModeValue } from '@chakra-ui/react';
 import { isFinite } from 'lodash';
-import { useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetPostsQuery } from '../api/post';
@@ -17,12 +16,6 @@ export default function Post() {
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetPostsQuery();
     const auth = useAuth();
     const gridBackground = useColorModeValue('gray.700', 'rgb(3,3,3)');
-    const ref = useRef(null);
-
-    useOutsideClick({
-        ref,
-        handler: () => navigate(-1)
-    });
 
     useEffectOnce(() => {
         if (!topic || !post_id) {
@@ -63,7 +56,7 @@ export default function Post() {
 
     return (
         <MainContainer maxW='full' background='gray.900' pb={0}>
-            <Container p={0} maxWidth='container.xl' ref={ref}>
+            <Container p={0} maxWidth='container.xl'>
                 <PostHeader post={data.data[0]} />
                 <GridContainer
                     mainContent={
