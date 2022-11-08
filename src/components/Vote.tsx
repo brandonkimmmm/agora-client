@@ -21,7 +21,7 @@ export default function Vote({
     onDownvoteClick?: () => void;
     iconColor?: SystemProps['color'];
     textColor?: SystemProps['color'];
-    iconSize?: ResponsiveValue<(string & any) | 'sm' | 'md' | 'lg' | 'xs'>;
+    iconSize?: ResponsiveValue<(string & object) | 'sm' | 'md' | 'lg' | 'xs'>;
     fontSize?: SystemProps['fontSize'];
 }) {
     const getColor = () => {

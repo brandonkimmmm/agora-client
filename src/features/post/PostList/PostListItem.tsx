@@ -8,11 +8,11 @@ import {
     usePutPostResetVoteMutation,
     usePutPostUpvoteMutation
 } from '../../../api/post';
+import TopicJoinButton from '../../../components/TopicJoinButton';
 import Vote from '../../../components/Vote';
 import useAuth from '../../../hooks/useAuth';
 import useBackground from '../../../hooks/useBackground';
 import useBorder from '../../../hooks/useBorder';
-import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { getTimePassed } from '../../../utils/dayjs';
 import PostCommentForm from '../PostCommentForm';
@@ -34,7 +34,6 @@ export default function PostListItem({
     showComments?: boolean;
 }) {
     const background = useBackground();
-    const colorScheme = useButtonColorScheme();
     const navigate = useNavigate();
     const textColor = useTextColor();
     const [isLoading, setIsLoading] = useState(true);
@@ -174,9 +173,7 @@ export default function PostListItem({
                         {!hideJoin && (
                             <>
                                 <Box flexGrow={1} />
-                                <Button colorScheme={colorScheme} size='xs' borderRadius='full'>
-                                    Join
-                                </Button>
+                                <TopicJoinButton title={post.topic.title} />
                             </>
                         )}
                     </HStack>

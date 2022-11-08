@@ -1,11 +1,10 @@
 import { Avatar, Box, Button, Container, HStack, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import { GetTopicsResponseItem } from '../../../api/topic';
+import TopicJoinButton from '../../../components/TopicJoinButton';
 import useBackground from '../../../hooks/useBackground';
-import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 
 export default function TopicHeader({ topic }: { topic: GetTopicsResponseItem }) {
     const background = useBackground();
-    const colorScheme = useButtonColorScheme();
     const borderColor = useColorModeValue('blue.400', 'white');
 
     return (
@@ -20,15 +19,13 @@ export default function TopicHeader({ topic }: { topic: GetTopicsResponseItem })
                                     <Text fontWeight='bold' fontSize='3xl'>
                                         {topic.display_title}
                                     </Text>
-                                    <Button
-                                        colorScheme={colorScheme}
-                                        borderRadius='full'
-                                        variant='outline'
+                                    <TopicJoinButton
+                                        joinVariant='outline'
+                                        leaveVariant='solid'
+                                        title={topic.title}
                                         size='sm'
-                                        px={6}
-                                    >
-                                        Join
-                                    </Button>
+                                        sx={{ px: 6 }}
+                                    />
                                 </HStack>
                                 <Text fontSize='sm' color='gray.500'>
                                     a/{topic.display_title}

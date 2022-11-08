@@ -1,10 +1,8 @@
-import { Avatar, Box, Button, HStack, Text } from '@chakra-ui/react';
+import { Avatar, Box, HStack, Text } from '@chakra-ui/react';
 import { GetTopicsResponseItem } from '../../../api/topic';
-import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
+import TopicJoinButton from '../../../components/TopicJoinButton';
 
 export default function TrendingTopicListItem({ topic }: { topic: GetTopicsResponseItem }) {
-    const colorScheme = useButtonColorScheme();
-
     return (
         <HStack w='full'>
             <Avatar size='sm' name={topic.display_title} src={topic.image_url} />
@@ -12,9 +10,7 @@ export default function TrendingTopicListItem({ topic }: { topic: GetTopicsRespo
                 a/{topic.display_title}
             </Text>
             <Box flexGrow={1} />
-            <Button colorScheme={colorScheme} size='xs' borderRadius='full'>
-                Join
-            </Button>
+            <TopicJoinButton title={topic.title} hideJoined />
         </HStack>
     );
 }

@@ -2,6 +2,7 @@ import { Avatar, Badge, Box, Button, Center, HStack, Icon, StackDivider, Text, V
 import { TbCake } from 'react-icons/tb';
 import { Optional } from 'utility-types';
 import { GetTopicsResponseItem } from '../../../api/topic';
+import TopicJoinButton from '../../../components/TopicJoinButton';
 import useBackground from '../../../hooks/useBackground';
 import useBorder from '../../../hooks/useBorder';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
@@ -81,9 +82,13 @@ export default function TopicSidePanel({
                         Create Post
                     </Button>
                 ) : (
-                    <Button colorScheme={colorScheme} borderRadius='full' size='sm' variant='outline' w='full'>
-                        Join
-                    </Button>
+                    <TopicJoinButton
+                        size='sm'
+                        joinVariant='outline'
+                        leaveVariant='solid'
+                        sx={{ w: 'full' }}
+                        title={topic.title}
+                    />
                 )}
             </VStack>
         </Box>

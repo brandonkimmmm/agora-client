@@ -8,12 +8,14 @@ export default function PostList({
     title,
     showTopic,
     showFull,
-    showCommentForm
+    showCommentForm,
+    hideJoin
 }: {
     title?: string;
     showTopic?: boolean;
     showFull?: boolean;
     showCommentForm?: boolean;
+    hideJoin?: boolean;
 }) {
     const [trigger, { data, isLoading, isFetching, isError }] = useLazyGetPostsQuery();
 
@@ -63,6 +65,7 @@ export default function PostList({
                             showTopic={showTopic}
                             showCommentForm={showCommentForm}
                             showFull={showFull}
+                            hideJoin={hideJoin}
                         />
                     </ListItem>
                 ))}

@@ -1,3 +1,4 @@
+import { omit } from 'lodash';
 import api from '../redux/rtk';
 import { IComment, IPost, ITopic, IUser, IVote, PaginationRequestParams, PaginationResponseData } from '../types';
 
@@ -39,7 +40,9 @@ interface GetPostsParams extends PaginationRequestParams {
     post_id?: number;
 }
 
-type PutPostVoteResponse = Pick<GetPostsResponseItem, 'id' | '_sum' | 'user_vote'>;
+type PutPostVoteResponse = Pick<GetPostsResponseItem, 'id' | '_sum' | 'user_vote'> & {
+    topic: Pick<ITopic, 'id' | 'title' | 'display_title'>;
+};
 
 type PutPostCommentVoteResponse = Pick<GetPostCommentsResponseItem, 'id' | '_sum' | 'user_vote'>;
 
@@ -78,13 +81,21 @@ export const postApi = api.injectEndpoints({
                         postApi.util.updateQueryData('getPosts', {}, (draft) => {
                             const index = draft.data.findIndex((i) => i.id === postId);
                             if (index > -1) {
-                                Object.assign(draft.data[index], data);
+                                Object.assign(draft.data[index], omit(data, 'topic'));
                             }
                         })
                     );
                     dispatch(
                         postApi.util.updateQueryData('getPosts', { post_id: postId }, (draft) => {
-                            Object.assign(draft.data[0], data);
+                            Object.assign(draft.data[0], omit(data, 'topic'));
+                        })
+                    );
+                    dispatch(
+                        postApi.util.updateQueryData('getPosts', { topic_title: data.topic.display_title }, (draft) => {
+                            const index = draft.data.findIndex((i) => i.id === postId);
+                            if (index > -1) {
+                                Object.assign(draft.data[index], omit(data, 'topic'));
+                            }
                         })
                     );
                 } catch {
@@ -104,13 +115,21 @@ export const postApi = api.injectEndpoints({
                         postApi.util.updateQueryData('getPosts', {}, (draft) => {
                             const index = draft.data.findIndex((i) => i.id === postId);
                             if (index > -1) {
-                                Object.assign(draft.data[index], data);
+                                Object.assign(draft.data[index], omit(data, 'topic'));
                             }
                         })
                     );
                     dispatch(
                         postApi.util.updateQueryData('getPosts', { post_id: postId }, (draft) => {
-                            Object.assign(draft.data[0], data);
+                            Object.assign(draft.data[0], omit(data, 'topic'));
+                        })
+                    );
+                    dispatch(
+                        postApi.util.updateQueryData('getPosts', { topic_title: data.topic.display_title }, (draft) => {
+                            const index = draft.data.findIndex((i) => i.id === postId);
+                            if (index > -1) {
+                                Object.assign(draft.data[index], omit(data, 'topic'));
+                            }
                         })
                     );
                 } catch {
@@ -130,13 +149,21 @@ export const postApi = api.injectEndpoints({
                         postApi.util.updateQueryData('getPosts', {}, (draft) => {
                             const index = draft.data.findIndex((i) => i.id === postId);
                             if (index > -1) {
-                                Object.assign(draft.data[index], data);
+                                Object.assign(draft.data[index], omit(data, 'topic'));
                             }
                         })
                     );
                     dispatch(
                         postApi.util.updateQueryData('getPosts', { post_id: postId }, (draft) => {
-                            Object.assign(draft.data[0], data);
+                            Object.assign(draft.data[0], omit(data, 'topic'));
+                        })
+                    );
+                    dispatch(
+                        postApi.util.updateQueryData('getPosts', { topic_title: data.topic.display_title }, (draft) => {
+                            const index = draft.data.findIndex((i) => i.id === postId);
+                            if (index > -1) {
+                                Object.assign(draft.data[index], omit(data, 'topic'));
+                            }
                         })
                     );
                 } catch {

@@ -49,7 +49,7 @@ export default function Topic() {
         <MainContainer>
             <TopicHeader topic={data.data[0]} />
             <GridContainer
-                mainContent={<PostList title={data.data[0].display_title} />}
+                mainContent={<PostList title={data.data[0].display_title} hideJoin />}
                 sideContent={<TopicSidePanel topic={data.data[0]} />}
                 sx={{
                     pt: 4

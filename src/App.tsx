@@ -5,6 +5,7 @@ import { Route, Routes } from 'react-router-dom';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyCheckTokenQuery } from './api/auth';
 import { useLazyGetHealthQuery } from './api/public';
+import { useLazyGetTopicSubscriptionsQuery } from './api/topic';
 import { setCredentials } from './features/auth/authSlice';
 import RootModal from './features/modal/RootModal';
 import { useAppDispatch } from './hooks/redux';
@@ -18,6 +19,7 @@ function App() {
     const [isError, setIsError] = useState(false);
     const [trigger] = useLazyGetHealthQuery();
     const dispatch = useAppDispatch();
+    const [getUserTopics] = useLazyGetTopicSubscriptionsQuery();
 
     useEffectOnce(() => {
         (async () => {
@@ -33,6 +35,7 @@ function App() {
                                 token
                             })
                         );
+                        await getUserTopics();
                     } catch (err) {
                         localStorage.removeItem('token');
                     }
