@@ -14,8 +14,8 @@ export default function GridContainer({
 }) {
     return (
         <Grid templateColumns='repeat(12, 1fr)' gap={gap} sx={sx}>
-            <GridItem colSpan={8}>{mainContent}</GridItem>
-            <GridItem colSpan={4}>{sideContent}</GridItem>
+            <GridItem colSpan={{ base: 12, lg: 8 }}>{mainContent}</GridItem>
+            <GridItem colSpan={{ base: 0, lg: 4 }}>{sideContent}</GridItem>
         </Grid>
     );
 }
