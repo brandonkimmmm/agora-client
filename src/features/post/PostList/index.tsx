@@ -56,7 +56,6 @@ export default function PostList({
 
     useEffectOnce(() => {
         (async () => {
-            window.scrollTo(0, 0);
             try {
                 const { count, data } = await trigger({ topic_title: title, limit: 10, page }).unwrap();
                 if (count === 0) setIsEmpty(true);
