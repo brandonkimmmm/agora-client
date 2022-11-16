@@ -64,7 +64,7 @@ export default function NavBar() {
                 <Flex
                     alignItems='center'
                     gap={2}
-                    onClick={() => navigate('/')}
+                    onClick={() => (window.location.pathname === '/' ? navigate(0) : navigate('/'))}
                     sx={{
                         _hover: {
                             cursor: 'pointer'

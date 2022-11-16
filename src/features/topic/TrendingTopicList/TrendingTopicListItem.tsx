@@ -3,6 +3,7 @@ import { GetTopicsResponseItem } from '../../../api/topic';
 import TopicJoinButton from '../../../components/TopicJoinButton';
 
 export default function TrendingTopicListItem({ topic }: { topic: GetTopicsResponseItem }) {
+    console.log(window.location.pathname);
     return (
         <HStack w='full'>
             <Avatar size='sm' name={topic.display_title} src={topic.image_url} />

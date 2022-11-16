@@ -1,5 +1,17 @@
 import { ChevronUpIcon } from '@chakra-ui/icons';
-import { Box, Button, Center, HStack, List, ListIcon, ListItem, Skeleton, Text } from '@chakra-ui/react';
+import {
+    Box,
+    Button,
+    Center,
+    HStack,
+    LinkBox,
+    LinkOverlay,
+    List,
+    ListIcon,
+    ListItem,
+    Skeleton,
+    Text
+} from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useEffectOnce } from 'usehooks-ts';
 import { useLazyGetTopicsQuery } from '../../../api/topic';
@@ -69,8 +81,8 @@ export default function TrendingTopicList() {
             <>
                 {data.data.map((d, i) => (
                     <ListItem
+                        as={LinkBox}
                         key={d.id}
-                        onClick={() => handleTopicClick(d.display_title)}
                         sx={{
                             _hover: {
                                 cursor: 'pointer'
@@ -78,6 +90,7 @@ export default function TrendingTopicList() {
                         }}
                     >
                         <HStack>
+                            <LinkOverlay onClick={() => handleTopicClick(d.display_title)} />
                             <Text>{i + 1}</Text>
                             <ListIcon as={ChevronUpIcon} color='green' />
                             <TrendingTopicListItem topic={d} />
