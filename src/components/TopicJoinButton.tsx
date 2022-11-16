@@ -2,6 +2,8 @@ import { Button, ResponsiveValue, SystemStyleObject } from '@chakra-ui/react';
 import { useRef } from 'react';
 import { useHover } from 'usehooks-ts';
 import { usePutTopicSubscribeMutation, usePutTopicUnsubscribeMutation } from '../api/topic';
+import { ModalTypes, showModal } from '../features/modal/modalSlice';
+import { useAppDispatch } from '../hooks/redux';
 import useAuth from '../hooks/useAuth';
 import useButtonColorScheme from '../hooks/useButtonColorScheme';
 import useTopicSubscribed from '../hooks/useTopicSubscribed';
@@ -28,16 +30,16 @@ export default function TopicJoinButton({
     const hoverRef = useRef(null);
     const isHover = useHover(hoverRef);
     const isSubscribed = useTopicSubscribed(title);
+    const dispatch = useAppDispatch();
 
-    const handleClick = async () => {
+    const handleClick = () => {
         if (!auth) {
-            return;
+            dispatch(showModal({ type: ModalTypes.AUTH_LOGIN }));
+        } else if (isSubscribed) {
+            unsub(title);
+        } else {
+            sub(title);
         }
-        if (isSubscribed) {
-            await unsub(title);
-            return;
-        }
-        await sub(title);
     };
 
     const getText = () => {

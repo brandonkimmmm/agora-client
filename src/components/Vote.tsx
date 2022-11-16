@@ -1,5 +1,8 @@
 import { IconButton, ResponsiveValue, Stack, SystemProps, SystemStyleObject, Text } from '@chakra-ui/react';
 import { BiDownvote, BiUpvote } from 'react-icons/bi';
+import { ModalTypes, showModal } from '../features/modal/modalSlice';
+import { useAppDispatch } from '../hooks/redux';
+import useAuth from '../hooks/useAuth';
 
 export default function Vote({
     value,
@@ -24,6 +27,8 @@ export default function Vote({
     iconSize?: ResponsiveValue<(string & object) | 'sm' | 'md' | 'lg' | 'xs'>;
     fontSize?: SystemProps['fontSize'];
 }) {
+    const auth = useAuth();
+    const dispatch = useAppDispatch();
     const getColor = () => {
         if (userValue === 1) {
             return 'brand.500';
@@ -34,6 +39,26 @@ export default function Vote({
         return textColor;
     };
 
+    const handleUpClick = () => {
+        if (onUpvoteClick) {
+            if (auth) {
+                onUpvoteClick();
+            } else {
+                dispatch(showModal({ type: ModalTypes.AUTH_LOGIN }));
+            }
+        }
+    };
+
+    const handleDownClick = () => {
+        if (onDownvoteClick) {
+            if (auth) {
+                onDownvoteClick();
+            } else {
+                dispatch(showModal({ type: ModalTypes.AUTH_LOGIN }));
+            }
+        }
+    };
+
     return (
         <Stack alignItems='center' direction={direction} sx={sx}>
             <IconButton
@@ -42,7 +67,7 @@ export default function Vote({
                 aria-label='upvote'
                 variant='link'
                 icon={<BiUpvote />}
-                onClick={onUpvoteClick}
+                onClick={handleUpClick}
             />
             <Text color={getColor()} fontSize={fontSize} fontWeight='bold'>
                 {value}
@@ -53,7 +78,7 @@ export default function Vote({
                 aria-label='downvote'
                 variant='link'
                 icon={<BiDownvote />}
-                onClick={onDownvoteClick}
+                onClick={handleDownClick}
             />
         </Stack>
     );
