@@ -31,7 +31,7 @@ interface GetPostCommentsParams extends PaginationRequestParams {
     post_id: number;
 }
 
-type GetPostsResponse = PaginationResponseData<GetPostsResponseItem>;
+export type GetPostsResponse = PaginationResponseData<GetPostsResponseItem>;
 
 interface GetPostsParams extends PaginationRequestParams {
     topic_id?: number;
@@ -238,6 +238,7 @@ export const postApi = api.injectEndpoints({
 });
 
 export const {
+    useGetPostsQuery,
     useLazyGetPostsQuery,
     useLazyGetPostCommentsQuery,
     usePutPostDownvoteMutation,
