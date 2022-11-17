@@ -11,6 +11,7 @@ import RootModal from './features/modal/RootModal';
 import { useAppDispatch } from './hooks/redux';
 import Home from './pages/Home';
 import Post from './pages/Post';
+import Submit from './pages/Submit';
 import Topic from './pages/Topic';
 
 function App() {
@@ -77,6 +78,7 @@ function App() {
                 <Route path='/' element={<Home />} />
                 <Route path='/a/:topic' element={<Topic />} />
                 <Route path='/a/:topic/comments/:post_id' element={<Post />} />
+                <Route path='/submit' element={<Submit />} />
             </Routes>
         </>
     );
