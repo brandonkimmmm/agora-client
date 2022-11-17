@@ -34,12 +34,12 @@ export default function PostListFilter({
             borderColor={borderColor}
             py={3}
             px={2}
-            spacing={0}
+            spacing={1}
         >
             <Button
                 size='sm'
                 isActive={selected === 'best'}
-                leftIcon={<AiOutlineRocket />}
+                leftIcon={<AiOutlineRocket size={20} />}
                 colorScheme={colorScheme}
                 borderRadius='full'
                 onClick={() => handleClick('best')}
@@ -50,7 +50,7 @@ export default function PostListFilter({
             <Button
                 isActive={selected === 'hot'}
                 size='sm'
-                leftIcon={<TbFlame />}
+                leftIcon={<TbFlame size={20} />}
                 colorScheme={colorScheme}
                 onClick={() => handleClick('hot')}
                 borderRadius='full'
@@ -61,7 +61,7 @@ export default function PostListFilter({
             <Button
                 size='sm'
                 isActive={selected === 'new'}
-                leftIcon={<TiStarburstOutline />}
+                leftIcon={<TiStarburstOutline size={20} />}
                 colorScheme={colorScheme}
                 onClick={() => handleClick('new')}
                 borderRadius='full'
@@ -72,7 +72,7 @@ export default function PostListFilter({
             <Button
                 size='sm'
                 isActive={selected === 'controversial'}
-                leftIcon={<TbAlertTriangle />}
+                leftIcon={<TbAlertTriangle size={20} />}
                 colorScheme={colorScheme}
                 onClick={() => handleClick('controversial')}
                 borderRadius='full'

@@ -4,6 +4,8 @@ import { Box, Center, List, ListItem, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useEffectOnce, useIntersectionObserver } from 'usehooks-ts';
 import { GetPostsResponseItem, useLazyGetPostsQuery } from '../../../api/post';
+import useAuth from '../../../hooks/useAuth';
+import PostListCreate from './PostListCreate';
 import PostListFilter from './PostListFilter';
 import PostListItem from './PostListItem';
 import PostListItemSkeleton from './PostListItemSkeleton';
@@ -33,6 +35,7 @@ export default function PostList({
     const [isEnd, setIsEnd] = useState(false);
     let isGettingNext = false;
     const [filter, setFilter] = useState('best');
+    const auth = useAuth();
 
     const getNextPosts = async () => {
         try {
@@ -104,6 +107,7 @@ export default function PostList({
 
         return (
             <>
+                {auth && <PostListCreate topic={title} />}
                 <PostListFilter selected={filter} setSelected={setFilter} />
                 {posts.map((d) => (
                     <ListItem key={d.id}>
