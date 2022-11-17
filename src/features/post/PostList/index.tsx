@@ -4,6 +4,7 @@ import { Box, Center, List, ListItem, Text } from '@chakra-ui/react';
 import { useEffect, useRef, useState } from 'react';
 import { useEffectOnce, useIntersectionObserver } from 'usehooks-ts';
 import { GetPostsResponseItem, useLazyGetPostsQuery } from '../../../api/post';
+import PostListFilter from './PostListFilter';
 import PostListItem from './PostListItem';
 import PostListItemSkeleton from './PostListItemSkeleton';
 
@@ -31,6 +32,7 @@ export default function PostList({
     const isVisible = !!entry?.isIntersecting;
     const [isEnd, setIsEnd] = useState(false);
     let isGettingNext = false;
+    const [filter, setFilter] = useState('best');
 
     const getNextPosts = async () => {
         try {
@@ -102,6 +104,7 @@ export default function PostList({
 
         return (
             <>
+                <PostListFilter selected={filter} setSelected={setFilter} />
                 {posts.map((d) => (
                     <ListItem key={d.id}>
                         <PostListItem
