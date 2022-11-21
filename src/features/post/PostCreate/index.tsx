@@ -1,4 +1,5 @@
 import { Box, HStack, Icon, Tab, TabList, TabPanel, TabPanels, Tabs, Text } from '@chakra-ui/react';
+import { useState } from 'react';
 import { CgFileDocument } from 'react-icons/cg';
 import { FiImage, FiLink } from 'react-icons/fi';
 import useBackground from '../../../hooks/useBackground';
@@ -7,14 +8,17 @@ import PostCreateHeader from './PostCreateHeader';
 import PostCreateLinkForm from './PostCreateLinkForm';
 import PostCreateMediaForm from './PostCreateMediaForm';
 import PostCreateTextForm from './PostCreateTextForm';
+import PostTopicDropdown from './PostTopicDropdown';
 
 export default function PostCreate() {
     const background = useBackground();
     const textColor = useTextColor();
+    const [topicTitle, setTopicTitle] = useState<string | null>(null);
 
     return (
         <Box w='full'>
             <PostCreateHeader />
+            <PostTopicDropdown />
             <Tabs background={background} borderRadius='md' mt={4}>
                 <TabList>
                     <Tab py={3} color={textColor} _selected={{ borderColor: 'white', color: 'white' }}>
