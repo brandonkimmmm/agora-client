@@ -75,7 +75,7 @@ export default function PostListItem({
         if (showFull) {
             return (
                 <VStack align='start' gap={2}>
-                    <Text fontSize='sm'>{post.body}</Text>
+                    {post.body && <Text fontSize='sm'>{post.body}</Text>}
                     {post.media_url && (
                         <Skeleton w='full' minH='fit-content' isLoaded={!isLoading}>
                             <Image

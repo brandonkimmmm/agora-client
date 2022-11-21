@@ -16,6 +16,16 @@ export interface GetPostsResponseItem extends IPost {
     user_vote: IVote['value'] | null;
 }
 
+type PostPostBody = {
+    topic_title: string;
+    title: string;
+    body?: string;
+    media_url?: string;
+    link_url?: string;
+};
+
+type PostPostResponse = GetPostsResponseItem;
+
 export interface GetPostCommentsResponseItem extends IComment {
     user: Pick<IUser, 'id' | 'username'>;
     _sum: {
@@ -68,6 +78,12 @@ export const postApi = api.injectEndpoints({
             }),
             providesTags: (result, error, arg) =>
                 result ? [...result.data.map(({ id }) => ({ type: 'Comment' as const, id })), 'Comment'] : ['Comment']
+        }),
+        postPost: builder.mutation<PostPostResponse, PostPostBody>({
+            query: (body) => ({
+                url: '/posts',
+                method: 'POST'
+            })
         }),
         putPostUpvote: builder.mutation<PutPostVoteResponse, number>({
             query: (postId) => ({
@@ -246,5 +262,6 @@ export const {
     usePutPostResetVoteMutation,
     usePutPostCommentDownvoteMutation,
     usePutPostCommentResetVoteMutation,
-    usePutPostCommentUpvoteMutation
+    usePutPostCommentUpvoteMutation,
+    usePostPostMutation
 } = postApi;

@@ -11,8 +11,9 @@ export interface ITopic {
 export interface IPost {
     id: number;
     title: string;
-    body: string;
+    body?: string;
     media_url?: string;
+    link_url?: string;
     created_at: Date;
     updated_at: Date;
 }
