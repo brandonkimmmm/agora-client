@@ -189,20 +189,25 @@ export default function PostTopicDropdown({
         );
     };
 
+    const handleOpen = () => {
+        onOpen();
+        setTopic(null);
+    };
+
     return (
-        <Box ref={ref}>
+        <Box ref={ref} w='xs'>
             <HStack
-                onClick={() => (!isOpen ? onOpen() : null)}
+                onClick={() => (!isOpen ? handleOpen() : null)}
                 borderColor={borderColor}
                 borderWidth='thin'
                 borderTopRadius='md'
                 borderBottomRadius={isOpen ? 'none' : 'md'}
                 background={background}
-                w='xs'
+                w='full'
                 p={2}
             >
                 {topic ? (
-                    <Avatar size='sm' name={topic.display_title} src={topic.image_url} />
+                    <Avatar size='xs' name={topic.display_title} src={topic.image_url} />
                 ) : (
                     <Icon color='gray' fontSize='2xl' as={isOpen ? TbSearch : TbCircleDashed} />
                 )}
