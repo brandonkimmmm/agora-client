@@ -1,6 +1,7 @@
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import {
     Avatar,
+    Box,
     Divider,
     HStack,
     Icon,
@@ -18,7 +19,13 @@ import { GetTopicsAvailableResponseItem, useLazyGetTopicsAvailableQuery } from '
 import useBackground from '../../../hooks/useBackground';
 import useBorder from '../../../hooks/useBorder';
 
-export default function PostTopicDropdown() {
+export default function PostTopicDropdown({
+    topic,
+    setTopic
+}: {
+    topic: GetTopicsAvailableResponseItem | null;
+    setTopic: (v: GetTopicsAvailableResponseItem | null) => void;
+}) {
     const [trigger, { data, isLoading, isFetching }] = useLazyGetTopicsAvailableQuery();
     const [search, setSearch] = useState<string>('');
     const { onOpen, onClose, isOpen } = useDisclosure();
@@ -36,6 +43,12 @@ export default function PostTopicDropdown() {
         trigger({});
     });
 
+    const handleTopicClick = (to: GetTopicsAvailableResponseItem) => {
+        setTopic(to);
+        setSearch(`a/${to.display_title}`);
+        onClose();
+    };
+
     const searchResults = (results: GetTopicsAvailableResponseItem[]) => {
         if (results.length === 0) {
             return (
@@ -44,11 +57,20 @@ export default function PostTopicDropdown() {
                 </Text>
             );
         }
-        return results.map((topic) => (
-            <HStack px={4} key={topic.title}>
-                <Avatar size='sm' name={topic.display_title} src={topic.image_url} />
+        return results.map((t) => (
+            <HStack
+                px={4}
+                key={t.title}
+                sx={{
+                    _hover: {
+                        cursor: 'pointer'
+                    }
+                }}
+                onClick={() => handleTopicClick(t)}
+            >
+                <Avatar size='sm' name={t.display_title} src={t.image_url} />
                 <Text fontSize='sm' fontWeight='bold' color='white'>
-                    a/{topic.display_title}
+                    a/{t.display_title}
                 </Text>
             </HStack>
         ));
@@ -61,11 +83,20 @@ export default function PostTopicDropdown() {
                 <Text fontSize='sm' fontWeight='semibold' color='gray'>
                     Your Communities
                 </Text>
-                {results.map((topic) => (
-                    <HStack px={2} key={topic.title}>
-                        <Avatar size='sm' name={topic.display_title} src={topic.image_url} />
+                {results.map((t) => (
+                    <HStack
+                        px={2}
+                        key={t.title}
+                        sx={{
+                            _hover: {
+                                cursor: 'pointer'
+                            }
+                        }}
+                        onClick={() => handleTopicClick(t)}
+                    >
+                        <Avatar size='sm' name={t.display_title} src={t.image_url} />
                         <Text fontSize='sm' fontWeight='bold' color='white'>
-                            a/{topic.display_title}
+                            a/{t.display_title}
                         </Text>
                     </HStack>
                 ))}
@@ -80,11 +111,20 @@ export default function PostTopicDropdown() {
                 <Text fontSize='sm' fontWeight='semibold' color='gray'>
                     Other Communities
                 </Text>
-                {results.map((topic) => (
-                    <HStack px={2} key={topic.title}>
-                        <Avatar size='sm' name={topic.display_title} src={topic.image_url} />
+                {results.map((t) => (
+                    <HStack
+                        px={2}
+                        key={t.title}
+                        sx={{
+                            _hover: {
+                                cursor: 'pointer'
+                            }
+                        }}
+                        onClick={() => handleTopicClick(t)}
+                    >
+                        <Avatar size='sm' name={t.display_title} src={t.image_url} />
                         <Text fontSize='sm' fontWeight='bold' color='white'>
-                            a/{topic.display_title}
+                            a/{t.display_title}
                         </Text>
                     </HStack>
                 ))}
@@ -101,19 +141,23 @@ export default function PostTopicDropdown() {
         const subTopics: GetTopicsAvailableResponseItem[] = [];
         const otherTopics: GetTopicsAvailableResponseItem[] = [];
 
-        for (const topic of data) {
+        for (const t of data) {
             let isSearch = false;
             if (debouncedSearch.length > 2) {
-                if (topic.title.includes(debouncedSearch) || topic.display_title.includes(debouncedSearch)) {
-                    searchTopics.push(topic);
+                const searchTitle = debouncedSearch.startsWith('a/') ? debouncedSearch.substring(2) : debouncedSearch;
+                if (
+                    t.title.toLowerCase().includes(searchTitle.toLowerCase()) ||
+                    t.display_title.toLowerCase().includes(searchTitle.toLowerCase())
+                ) {
+                    searchTopics.push(t);
                     isSearch = true;
                 }
             }
             if (!isSearch) {
-                if (topic.subscribed) {
-                    subTopics.push(topic);
+                if (t.subscribed) {
+                    subTopics.push(t);
                 } else {
-                    otherTopics.push(topic);
+                    otherTopics.push(t);
                 }
             }
         }
@@ -146,9 +190,8 @@ export default function PostTopicDropdown() {
     };
 
     return (
-        <>
+        <Box ref={ref}>
             <HStack
-                ref={ref}
                 onClick={() => (!isOpen ? onOpen() : null)}
                 borderColor={borderColor}
                 borderWidth='thin'
@@ -158,11 +201,18 @@ export default function PostTopicDropdown() {
                 w='xs'
                 p={2}
             >
-                <Icon color='gray' fontSize='2xl' as={isOpen ? TbSearch : TbCircleDashed} />
+                {topic ? (
+                    <Avatar size='sm' name={topic.display_title} src={topic.image_url} />
+                ) : (
+                    <Icon color='gray' fontSize='2xl' as={isOpen ? TbSearch : TbCircleDashed} />
+                )}
                 <Input
                     variant='unstyled'
                     placeholder={isOpen ? 'Search communities' : 'Choose a community'}
                     w='full'
+                    fontWeight='semibold'
+                    color='white'
+                    fontSize='sm'
                     sx={{
                         _placeholder: {
                             fontWeight: 'semibold',
@@ -176,6 +226,6 @@ export default function PostTopicDropdown() {
                 <Icon color='gray' as={ChevronDownIcon} fontSize='xl' sx={{ _hover: { cursor: 'pointer' } }} />
             </HStack>
             {isOpen && communitiesList()}
-        </>
+        </Box>
     );
 }
