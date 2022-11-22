@@ -18,10 +18,11 @@ type GetUserTopicsResponseItem = Pick<ITopic, 'id' | 'title' | 'display_title' |
 
 export type GetUserTopicsResponse = PaginationResponseData<GetUserTopicsResponseItem>;
 
-export type GetTopicsAvailableResponse = Pick<ITopic, 'id' | 'title' | 'display_title' | 'image_url'> &
-    {
-        subscribed?: boolean;
-    }[];
+export type GetTopicsAvailableResponseItem = Pick<ITopic, 'id' | 'title' | 'display_title' | 'image_url'> & {
+    subscribed?: boolean;
+};
+
+export type GetTopicsAvailableResponse = Array<GetTopicsAvailableResponseItem>;
 
 type GetTopicsAvailableParams = {
     search?: string;
