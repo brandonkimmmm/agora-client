@@ -127,7 +127,7 @@ export default function PostList({
     return (
         <List w='full' spacing={4}>
             {getContent()}
-            {!isEnd && (
+            {!isError && !isEmpty && !isEnd && (
                 <Box ref={ref}>
                     <PostListItemSkeleton />
                 </Box>
