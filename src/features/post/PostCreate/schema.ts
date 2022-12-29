@@ -2,7 +2,7 @@ import z from 'zod';
 
 export const createPostSchema = z.object({
     title: z.string().min(1).max(300),
-    body: z.string().min(1).max(1000).optional(),
+    body: z.string().min(0).max(1000).optional(),
     media_url: z.string().url(),
     link_url: z.string().url()
 });

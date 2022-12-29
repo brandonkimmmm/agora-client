@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 import { useRef, useState } from 'react';
 import { TbCircleDashed, TbSearch } from 'react-icons/tb';
+import { useSearchParams } from 'react-router-dom';
 import { useDebounce, useEffectOnce } from 'usehooks-ts';
 import { GetTopicsAvailableResponseItem, useLazyGetTopicsAvailableQuery } from '../../../api/topic';
 import useBackground from '../../../hooks/useBackground';
@@ -33,6 +34,7 @@ export default function PostTopicDropdown({
     const [borderColor] = useBorder();
     const background = useBackground();
     const ref = useRef(null);
+    const [searchParams, setSearchParams] = useSearchParams();
 
     useOutsideClick({
         ref,
@@ -40,12 +42,23 @@ export default function PostTopicDropdown({
     });
 
     useEffectOnce(() => {
-        trigger({});
+        (async () => {
+            const topics = await trigger({}).unwrap();
+            if (searchParams.get('topic')) {
+                const t = topics.find((to) => to.display_title === searchParams.get('topic'));
+                if (t) {
+                    setTopic(t);
+                    setSearch(`a/${t.display_title}`);
+                }
+            }
+        })();
     });
 
     const handleTopicClick = (to: GetTopicsAvailableResponseItem) => {
         setTopic(to);
         setSearch(`a/${to.display_title}`);
+        searchParams.set('topic', to.display_title);
+        setSearchParams(searchParams);
         onClose();
     };
 

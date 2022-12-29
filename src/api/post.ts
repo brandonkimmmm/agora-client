@@ -82,7 +82,8 @@ export const postApi = api.injectEndpoints({
         postPost: builder.mutation<PostPostResponse, PostPostBody>({
             query: (body) => ({
                 url: '/posts',
-                method: 'POST'
+                method: 'POST',
+                body
             })
         }),
         putPostUpvote: builder.mutation<PutPostVoteResponse, number>({
