@@ -1,4 +1,4 @@
-import { Grid, GridItem, SystemProps, SystemStyleObject } from '@chakra-ui/react';
+import { Grid, GridItem, SystemProps, SystemStyleObject, useBreakpointValue } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 
 export default function GridContainer({
@@ -12,10 +12,16 @@ export default function GridContainer({
     sx?: SystemStyleObject;
     gap?: SystemProps['gap'];
 }) {
+    const hidden = useBreakpointValue({
+        sm: true,
+        lg: false
+    });
     return (
         <Grid templateColumns='repeat(12, 1fr)' gap={gap} sx={sx}>
             <GridItem colSpan={{ base: 12, lg: 8 }}>{mainContent}</GridItem>
-            <GridItem colSpan={{ base: 0, lg: 4 }}>{sideContent}</GridItem>
+            <GridItem hidden={hidden} colSpan={{ base: 0, lg: 4 }}>
+                {sideContent}
+            </GridItem>
         </Grid>
     );
 }
