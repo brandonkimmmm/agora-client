@@ -1,13 +1,17 @@
 import { Avatar, Badge, Box, Button, Center, HStack, Icon, StackDivider, Text, VStack } from '@chakra-ui/react';
 import { TbCake } from 'react-icons/tb';
+import { useNavigate } from 'react-router-dom';
 import { Optional } from 'utility-types';
 import { GetTopicsResponseItem } from '../../../api/topic';
 import TopicJoinButton from '../../../components/TopicJoinButton';
+import { useAppDispatch } from '../../../hooks/redux';
+import useAuth from '../../../hooks/useAuth';
 import useBackground from '../../../hooks/useBackground';
 import useBorder from '../../../hooks/useBorder';
 import useButtonColorScheme from '../../../hooks/useButtonColorScheme';
 import useTextColor from '../../../hooks/useTextColor';
 import { formatDate } from '../../../utils/dayjs';
+import { ModalTypes, showModal } from '../../modal/modalSlice';
 
 export default function TopicSidePanel({
     topic,
@@ -18,10 +22,21 @@ export default function TopicSidePanel({
     showHeader?: boolean;
     buttonType?: 'create' | 'join';
 }) {
+    const auth = useAuth();
+    const dispatch = useAppDispatch();
     const background = useBackground();
     const textColor = useTextColor();
     const colorScheme = useButtonColorScheme();
     const [borderColor] = useBorder();
+    const navigate = useNavigate();
+
+    const handleClick = () => {
+        if (!auth) {
+            dispatch(showModal({ type: ModalTypes.AUTH_LOGIN }));
+        } else {
+            navigate(`/submit?type=text&topic=${topic.display_title}`);
+        }
+    };
 
     return (
         <Box boxShadow='md' borderRadius='md' background={background} border='1px' borderColor={borderColor}>
@@ -78,7 +93,14 @@ export default function TopicSidePanel({
                     </VStack>
                 </HStack>
                 {buttonType === 'create' ? (
-                    <Button colorScheme={colorScheme} borderRadius='full' size='sm' variant='solid' w='full'>
+                    <Button
+                        onClick={handleClick}
+                        colorScheme={colorScheme}
+                        borderRadius='full'
+                        size='sm'
+                        variant='solid'
+                        w='full'
+                    >
                         Create Post
                     </Button>
                 ) : (
